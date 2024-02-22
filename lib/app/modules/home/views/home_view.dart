@@ -9,15 +9,64 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('HomeView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'HomeView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+      backgroundColor: Color(0xFFB9CFFC),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(200, 50, 0, 0),
+            child: Text(
+              "Monday, 12/02/2024",
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.normal,
+                color: Color(0xFF000000),
+              ),
+            ),
+          ),
+          Container(
+            child: Row(
+              children: [
+                Icon(Icons.person_2_rounded),
+                const Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(50, 30, 0, 0),
+                      child: Text(
+                        "Violia Ruana",
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF000000),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(50, 10, 0, 0),
+                      child: Text(
+                        "IT Intern",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.normal,
+                          color: Color(0xFF000000),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Stack(children: [
+            Container(
+              width: double.infinity,
+              height: 400,
+              color: Colors.white,
+            ),
+            Row(
+              children: [],
+            ),
+          ])
+        ],
       ),
     );
   }

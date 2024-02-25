@@ -1,3 +1,4 @@
+import 'package:bantu_pengusaha/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -9,8 +10,10 @@ class HomeController extends GetxController {
     super.onInit();
   }
 
-  @override
   void onReady() {
+    Future.delayed(const Duration(seconds: 3), () {
+      Get.offAllNamed(Routes.CLOCK_IN);
+    });
     super.onReady();
   }
 

@@ -1,9 +1,8 @@
+import 'package:bantu_pengusaha/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
-import '../../../routes/app_pages.dart';
-
-class LoginController extends GetxController {
-  //TODO: Implement LoginController
+class ClockInController extends GetxController {
+  //TODO: Implement ClockInController
 
   final count = 0.obs;
   @override
@@ -11,10 +10,9 @@ class LoginController extends GetxController {
     super.onInit();
   }
 
-  @override
   void onReady() {
     Future.delayed(const Duration(seconds: 3), () {
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.CLOCK_OUT);
     });
     super.onReady();
   }

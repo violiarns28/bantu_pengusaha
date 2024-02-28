@@ -1,3 +1,4 @@
+import 'package:bantu_pengusaha/app/modules/bottomNavBar/views/bottom_nav_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -50,65 +51,67 @@ class LoginView extends GetView<LoginController> {
                   ],
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.all(24.0),
-                margin: const EdgeInsets.all(24.0),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFDAE6FD),
-                  borderRadius: BorderRadius.circular(24.0),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.all(0),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            prefixIcon:
-                                const Icon(Icons.person_outline_outlined),
-                            labelText: "Email",
-                            hintText: "Email",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            enabledBorder: const OutlineInputBorder(
-                              gapPadding: 0,
-                            ),
-                            hintStyle: const TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    Container(
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.all(0),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.fingerprint),
-                            labelText: "Password",
-                            hintText: "Password",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            enabledBorder: const OutlineInputBorder(
-                              gapPadding: 0,
-                            ),
-                            suffixIcon: const IconButton(
-                              onPressed: null,
-                              icon: Icon(Icons.remove_red_eye_sharp),
+              Center(
+                child: Container(
+                  padding: const EdgeInsets.all(24.0),
+                  margin: const EdgeInsets.all(24.0),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFDAE6FD),
+                    borderRadius: BorderRadius.circular(24.0),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.all(0),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              prefixIcon:
+                                  const Icon(Icons.person_outline_outlined),
+                              labelText: "Email",
+                              hintText: "Email",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              enabledBorder: const OutlineInputBorder(
+                                gapPadding: 0,
+                              ),
+                              hintStyle: const TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.normal,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 16.0),
+                      Container(
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.all(0),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.fingerprint),
+                              labelText: "Password",
+                              hintText: "Password",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              enabledBorder: const OutlineInputBorder(
+                                gapPadding: 0,
+                              ),
+                              suffixIcon: const IconButton(
+                                onPressed: null,
+                                icon: Icon(Icons.remove_red_eye_sharp),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Center(
@@ -120,7 +123,9 @@ class LoginView extends GetView<LoginController> {
                     width: 263,
                     height: 52,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => {
+                        Get.to(() => BottomNavBarView()),
+                      },
                       child: const Text(
                         "Login",
                         style: TextStyle(

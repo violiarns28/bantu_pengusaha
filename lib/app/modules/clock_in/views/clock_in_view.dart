@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:oktoast/oktoast.dart';
 
-import '../controllers/clock_in_controller.dart';
-
-class ClockInView extends GetView<ClockInController> {
+class ClockInView extends StatelessWidget {
   const ClockInView({Key? key}) : super(key: key);
 
   @override
@@ -177,7 +175,11 @@ class ClockInView extends GetView<ClockInController> {
                         width: 263,
                         height: 52,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            // Display toast
+                            showOkToast(
+                                context); // Call the function to show toast
+                          },
                           child: const Text(
                             "Clock In",
                             style: TextStyle(
@@ -203,4 +205,44 @@ class ClockInView extends GetView<ClockInController> {
       ),
     );
   }
+}
+
+// Define a function to show toast using OkToast
+void showOkToast(BuildContext context) {
+  showToastWidget(
+    Container(
+      width: MediaQuery.of(context).size.width * 0.7,
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      decoration: BoxDecoration(
+        color: Color(0xFFE7EFFF),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            'Clock In Successful!',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+          SizedBox(height: 8),
+          Text(
+            'Make sure your position around the office point!',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 14.0,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+    ),
+    position: ToastPosition.top,
+    duration: Duration(seconds: 2),
+  );
 }

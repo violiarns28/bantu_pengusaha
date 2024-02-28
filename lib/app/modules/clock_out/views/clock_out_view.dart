@@ -5,124 +5,122 @@ import '../controllers/clock_out_controller.dart';
 
 class ClockOutView extends GetView<ClockOutController> {
   const ClockOutView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFB9CFFC),
       body: Column(
         children: [
-          SizedBox(height: 30),
           Expanded(
             child: Stack(
               children: [
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 160,
-                    ),
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 24),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(50),
-                            topRight: Radius.circular(50),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Material(
-                              elevation: 5,
-                              borderRadius: BorderRadius.circular(20),
-                              color: Color(0xFFEDF0F6),
-                              child: Container(
-                                padding: EdgeInsets.all(8),
-                                width: 103,
-                                height: 82,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      "Clock In",
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w500,
-                                        color: Color(0xFF000000),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      "07 : 49",
-                                      style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Color(0xFF2DBF4D),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Material(
-                              elevation: 5,
-                              borderRadius: BorderRadius.circular(20),
-                              color: Color(0xFFEDF0F6),
-                              child: Container(
-                                padding: EdgeInsets.all(8),
-                                width: 103,
-                                height: 82,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      "Clock Out",
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w500,
-                                        color: Color(0xFF000000),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      "-- : --",
-                                      style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.red,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 350),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    width: double.infinity,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(50),
+                        topRight: Radius.circular(50),
                       ),
                     ),
-                  ],
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 140),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Material(
+                            elevation: 5,
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color(0xFFEDF0F6),
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              width: 103,
+                              height: 82,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: const [
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    "Clock In",
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xFF000000),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    "07 : 49",
+                                    style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.green,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Material(
+                            elevation: 5,
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color(0xFFEDF0F6),
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              width: 103,
+                              height: 82,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: const [
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    "Clock Out",
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xFF000000),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    "-- : --",
+                                    style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.red,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
                 Positioned(
-                  bottom: 380,
+                  bottom: 370,
                   left: 0,
                   right: 0,
                   child: Center(
                     child: Container(
                       width: 297,
                       height: MediaQuery.of(context).size.height / 11.4,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(
                           Radius.circular(15),
                         ),
@@ -136,12 +134,12 @@ class ClockOutView extends GetView<ClockOutController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // Removed the Icon widget here
-                          SizedBox(width: 16),
+                          const SizedBox(width: 16),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(top: 10),
+                                padding: const EdgeInsets.only(top: 10),
                                 child: Text(
                                   "Location",
                                   style: TextStyle(
@@ -167,25 +165,51 @@ class ClockOutView extends GetView<ClockOutController> {
                   ),
                 ),
                 Positioned(
-                  bottom: 160, // Adjusted the top position
+                  bottom: 160,
                   left: 0,
                   right: 0,
                   child: Center(
-                    child: SizedBox(
-                      width: 263,
-                      height: 52,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "Clock Out",
-                          style: TextStyle(
+                    child: Material(
+                      elevation: 8,
+                      borderRadius: BorderRadius.circular(24),
+                      color: const Color(0xFFEDF0F6),
+                      child: SizedBox(
+                        width: 263,
+                        height: 52,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Display toast
+                            Get.snackbar(
+                              '', // Title (optional)
+                              'Clock Out Successful!', // Message
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: Color(0xFFE7EFFF),
+                              colorText: Colors.black,
+                              duration: const Duration(seconds: 2),
+                              borderRadius: 30,
+                              messageText: Text(
+                                'Clock Out Successful',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            "Clock Out",
+                            style: TextStyle(
                               color: Colors.white,
                               fontSize: 24.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0xFF3559A0)),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color(0xFF3559A0),
+                            ),
+                          ),
                         ),
                       ),
                     ),

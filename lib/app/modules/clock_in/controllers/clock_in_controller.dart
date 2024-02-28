@@ -1,4 +1,3 @@
-import 'package:bantu_pengusaha/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class ClockInController extends GetxController {
@@ -11,9 +10,9 @@ class ClockInController extends GetxController {
   }
 
   void onReady() {
-    Future.delayed(const Duration(seconds: 3), () {
-      Get.offAllNamed(Routes.CLOCK_OUT);
-    });
+    // Future.delayed(const Duration(seconds: 3), () {
+    //   Get.offAllNamed(Routes.PROFILE);
+    // });
     super.onReady();
   }
 

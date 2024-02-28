@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-class AccClockInController extends GetxController {
-  //TODO: Implement AccClockInController
+class ProfileController extends GetxController {
+  //TODO: Implement ProfileController
 
   final count = 0.obs;
   @override

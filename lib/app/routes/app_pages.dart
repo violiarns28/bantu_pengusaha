@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import '../modules/clock_in/acc_clock_in/bindings/acc_clock_in_binding.dart';
-import '../modules/clock_in/acc_clock_in/views/acc_clock_in_view.dart';
+import '../modules/bottomNavBar/bindings/bottom_nav_bar_binding.dart';
+import '../modules/bottomNavBar/views/bottom_nav_bar_view.dart';
 import '../modules/clock_in/bindings/attendance_binding.dart';
 import '../modules/clock_in/views/clock_in_view.dart';
 import '../modules/clock_out/bindings/clock_out_binding.dart';
@@ -10,6 +10,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 
@@ -45,13 +47,16 @@ class AppPages {
       name: _Paths.CLOCK_IN,
       page: () => const ClockInView(),
       binding: ClockInBinding(),
-      children: [
-        GetPage(
-          name: _Paths.ACC_CLOCK_IN,
-          page: () => const AccClockInView(),
-          binding: AccClockInBinding(),
-        ),
-      ],
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.BOTTOM_NAV_BAR,
+      page: () => BottomNavBarView(),
+      binding: BottomNavBarBinding(),
     ),
   ];
 }

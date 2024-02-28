@@ -1,8 +1,13 @@
-import 'package:bantu_pengusaha/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController
+  var tabIndex = 0;
+
+  void changeTabIndex(int index) {
+    tabIndex = index;
+    update();
+  }
 
   final count = 0.obs;
   @override
@@ -11,9 +16,9 @@ class HomeController extends GetxController {
   }
 
   void onReady() {
-    Future.delayed(const Duration(seconds: 3), () {
-      Get.offAllNamed(Routes.CLOCK_IN);
-    });
+// Future.delayed(const Duration(seconds: 3), () {
+// Get.offAllNamed(Routes.CLOCK_IN);
+// });
     super.onReady();
   }
 

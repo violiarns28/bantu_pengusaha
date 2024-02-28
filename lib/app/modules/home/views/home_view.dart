@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class HomeView extends StatefulWidget {
+class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -446,11 +446,5 @@ class HomeView extends StatefulWidget {
         ),
       ),
     );
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
   }
 }

@@ -14,7 +14,7 @@ class ClockInView extends StatelessWidget {
             child: Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 350),
+                  padding: const EdgeInsets.only(top: 320),
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     width: double.infinity,
@@ -27,7 +27,7 @@ class ClockInView extends StatelessWidget {
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 140),
+                      padding: const EdgeInsets.only(bottom: 180),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -217,29 +217,14 @@ void showOkToast(BuildContext context) {
         color: Color(0xFFE7EFFF),
         borderRadius: BorderRadius.circular(30),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            'Clock In Successful!',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-          SizedBox(height: 8),
-          Text(
-            'Make sure your position around the office point!',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 14.0,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
-            ),
-          ),
-        ],
+      child: Text(
+        'Clock In Successful!',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.w500,
+          color: Colors.black,
+        ),
       ),
     ),
     position: ToastPosition.top,

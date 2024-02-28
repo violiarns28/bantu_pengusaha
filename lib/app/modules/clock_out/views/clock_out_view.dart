@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oktoast/oktoast.dart';
 
 import '../controllers/clock_out_controller.dart';
 
@@ -16,7 +17,7 @@ class ClockOutView extends GetView<ClockOutController> {
             child: Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 350),
+                  padding: const EdgeInsets.only(top: 320),
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     width: double.infinity,
@@ -29,7 +30,7 @@ class ClockOutView extends GetView<ClockOutController> {
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 140),
+                      padding: const EdgeInsets.only(bottom: 180),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -179,23 +180,7 @@ class ClockOutView extends GetView<ClockOutController> {
                         child: ElevatedButton(
                           onPressed: () {
                             // Display toast
-                            Get.snackbar(
-                              '', // Title (optional)
-                              'Clock Out Successful!', // Message
-                              snackPosition: SnackPosition.TOP,
-                              backgroundColor: Color(0xFFE7EFFF),
-                              colorText: Colors.black,
-                              duration: const Duration(seconds: 2),
-                              borderRadius: 30,
-                              messageText: Text(
-                                'Clock Out Successful',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            );
+                            showOkToast(context);
                           },
                           child: const Text(
                             "Clock Out",
@@ -222,4 +207,28 @@ class ClockOutView extends GetView<ClockOutController> {
       ),
     );
   }
+}
+
+void showOkToast(BuildContext context) {
+  showToastWidget(
+    Container(
+      width: MediaQuery.of(context).size.width * 0.7,
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      decoration: BoxDecoration(
+        color: Color(0xFFE7EFFF),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Text(
+        'Clock Out Successful!',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.w500,
+          color: Colors.black,
+        ),
+      ),
+    ),
+    position: ToastPosition.top,
+    duration: Duration(seconds: 2),
+  );
 }

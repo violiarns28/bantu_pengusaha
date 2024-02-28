@@ -1,47 +1,70 @@
+import 'package:bantu_pengusaha/app/modules/home/views/home_view.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../controllers/bottom_nav_bar_controller.dart';
+import '../../clock_in/views/clock_in_view.dart';
+import '../../profile/views/profile_view.dart';
 
-class BottomNavBarView extends StatelessWidget {
-  final BottomNavBarController _controller = Get.put(BottomNavBarController());
+class BottomNavBarView extends StatefulWidget {
+  const BottomNavBarView({Key? key}) : super(key: key);
+
+  @override
+  State<BottomNavBarView> createState() => BottomNavBarViewState();
+}
+
+class BottomNavBarViewState extends State<BottomNavBarView> {
+  int tabIndex = 0;
+
+  void changeTabIndex(int index) {
+    setState(() {
+      tabIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
+      body: IndexedStack(
+        index: tabIndex,
+        children: [
+          HomeView(),
+          ClockInView(),
+          ProfileView(),
+        ],
+      ),
       bottomNavigationBar: CurvedNavigationBar(
-        index: _controller.selectedIndex.value,
-        height: 65.0,
-        backgroundColor: const Color(0xFFFFFFFF),
-        color: const Color(0xFFCFDFFC).withOpacity(0.7),
-        animationDuration: Duration(milliseconds: 600),
-        onTap: _controller.changePage,
         items: [
           CurvedNavigationBarItem(
             child: Icon(
               Icons.home_outlined,
-              size: 30,
+              color: tabIndex == 0 ? Colors.white : Colors.black,
             ),
             label: 'Home',
           ),
           CurvedNavigationBarItem(
             child: Icon(
               Icons.rule_rounded,
-              size: 30,
+              color: tabIndex == 1 ? Colors.white : Colors.black,
             ),
             label: 'Attendance',
           ),
           CurvedNavigationBarItem(
             child: Icon(
-              Icons.person_2_outlined,
-              size: 30,
+              Icons.person_2_rounded,
+              color: tabIndex == 2 ? Colors.white : Colors.black,
             ),
             label: 'Profile',
           ),
         ],
+        backgroundColor: Colors.transparent,
+        index: tabIndex,
+        onTap: changeTabIndex,
+        color: Color(0xFFCFDFFC).withOpacity(0.7),
+        buttonBackgroundColor: Color(0xFF7C96CB),
+        height: 65,
+        animationDuration: Duration(milliseconds: 200),
+        animationCurve: Curves.easeInOut,
       ),
     );
   }

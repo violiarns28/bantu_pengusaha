@@ -211,20 +211,34 @@ class ClockInView extends StatelessWidget {
 void showOkToast(BuildContext context) {
   showToastWidget(
     Container(
-      width: MediaQuery.of(context).size.width * 0.7,
+      width: MediaQuery.of(context).size.width * 0.8,
+      height: MediaQuery.of(context).size.height * 0.13,
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       decoration: BoxDecoration(
         color: Color(0xFFE7EFFF),
         borderRadius: BorderRadius.circular(30),
       ),
-      child: Text(
-        'Clock In Successful!',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 20.0,
-          fontWeight: FontWeight.w500,
-          color: Colors.black,
-        ),
+      child: Column(
+        children: [
+          Text(
+            'Clock In Unsuccessful!',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            'Make sure your position around the office point',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.normal,
+              color: Colors.black,
+            ),
+          ),
+        ],
       ),
     ),
     position: ToastPosition.top,

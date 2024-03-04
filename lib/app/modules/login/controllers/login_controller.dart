@@ -11,9 +11,6 @@ class LoginController extends GetxController {
 
   @override
   void onReady() {
-    // Future.delayed(const Duration(seconds: 3), () {
-    //   Get.offAllNamed(Routes.HOME);
-    // });
     super.onReady();
   }
 

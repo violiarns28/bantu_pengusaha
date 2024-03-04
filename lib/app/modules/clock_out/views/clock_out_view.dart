@@ -17,7 +17,7 @@ class ClockOutView extends GetView<ClockOutController> {
             child: Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 320),
+                  padding: const EdgeInsets.only(top: 340),
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     width: double.infinity,

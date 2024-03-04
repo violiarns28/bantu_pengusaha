@@ -9,9 +9,6 @@ class LoginView extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
-    // Future.delayed(const Duration(seconds: 3), () {
-    //   Get.offNamed(Routes.HOME);
-    // });
     return GetBuilder<LoginController>(builder: (context) {
       return Scaffold(
         backgroundColor: const Color(0xFFB9CFFC),
@@ -56,27 +53,27 @@ class LoginView extends GetView<LoginController> {
                   padding: const EdgeInsets.all(24.0),
                   margin: const EdgeInsets.all(24.0),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFDAE6FD),
-                    borderRadius: BorderRadius.circular(24.0),
+                    color: Colors.white.withOpacity(0.48),
+                    borderRadius: BorderRadius.circular(32.0),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        color: Colors.white,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.6),
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(0),
                           child: TextFormField(
                             decoration: InputDecoration(
                               prefixIcon:
-                                  const Icon(Icons.person_outline_outlined),
+                                  const Icon(Icons.alternate_email_rounded),
                               labelText: "Email",
                               hintText: "Email",
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              enabledBorder: const OutlineInputBorder(
-                                gapPadding: 0,
+                                borderRadius: BorderRadius.circular(16.0),
                               ),
                               hintStyle: const TextStyle(
                                 fontSize: 16.0,
@@ -88,19 +85,20 @@ class LoginView extends GetView<LoginController> {
                       ),
                       const SizedBox(height: 16.0),
                       Container(
-                        color: Colors.white,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.6),
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(0),
                           child: TextFormField(
                             decoration: InputDecoration(
-                              prefixIcon: const Icon(Icons.fingerprint),
+                              prefixIcon:
+                                  const Icon(Icons.lock_outline_rounded),
                               labelText: "Password",
                               hintText: "Password",
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              enabledBorder: const OutlineInputBorder(
-                                gapPadding: 0,
+                                borderRadius: BorderRadius.circular(16.0),
                               ),
                               suffixIcon: const IconButton(
                                 onPressed: null,
@@ -131,7 +129,7 @@ class LoginView extends GetView<LoginController> {
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 24.0,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.w600),
                       ),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(

@@ -1,11 +1,15 @@
-import 'package:bantu_pengusaha/app/modules/bottomNavBar/views/bottom_nav_bar_view.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../network/api.dart';
+import '../../home/views/home_view.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
-  const LoginView({super.key});
+  const LoginView({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +71,7 @@ class LoginView extends GetView<LoginController> {
                         child: Padding(
                           padding: const EdgeInsets.all(0),
                           child: TextFormField(
+                            controller: controller.email,
                             decoration: InputDecoration(
                               prefixIcon:
                                   const Icon(Icons.alternate_email_rounded),
@@ -92,6 +97,9 @@ class LoginView extends GetView<LoginController> {
                         child: Padding(
                           padding: const EdgeInsets.all(0),
                           child: TextFormField(
+                            controller: controller.password,
+                            obscureText: true, // Password is obscured
+
                             decoration: InputDecoration(
                               prefixIcon:
                                   const Icon(Icons.lock_outline_rounded),
@@ -116,14 +124,16 @@ class LoginView extends GetView<LoginController> {
                 child: Material(
                   elevation: 8,
                   borderRadius: BorderRadius.circular(24),
-                  color: Color(0xFFEDF0F6),
+                  color: const Color(0xFFEDF0F6),
                   child: SizedBox(
                     width: 263,
                     height: 52,
                     child: ElevatedButton(
-                      onPressed: () => {
-                        Get.to(() => BottomNavBarView()),
+                      onPressed:  (){
+                        final c = controller;
+                        c.login(c.email.text, c.password.text);
                       },
+
                       child: const Text(
                         "Login",
                         style: TextStyle(
@@ -131,6 +141,7 @@ class LoginView extends GetView<LoginController> {
                             fontSize: 24.0,
                             fontWeight: FontWeight.w600),
                       ),
+
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                             const Color(0xFF3559A0)),

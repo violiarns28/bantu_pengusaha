@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\API\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -10,8 +9,8 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
 |
 */
 
@@ -19,17 +18,19 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-// Route::prefix('auth')->group(function () {
-//     Route::post('register', [
-//         AuthController::class,
-//         'register'
-//     ]);
-// });
-Route::group([
-    'prefix' => 'auth'
+Route::post('/register', [App\Http\Controllers\API\AuthController::class, 'register']);
+//API route for login user
+Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
 
-], function ($router) {
+//Protecting Routes
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/profile', function (Request $request) {
+        return auth()->user();
+    });
 
-    Route::post('register', [AuthController::class, 'register']);
-    Route::post('login', [AuthController::class, 'login']);
+    // API route for logout user
+    Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
+    Route::get('/get-attendance',  [App\Http\Controllers\API\AttendanceController::class, 'getAttendances']);
+
+    Route::post('/save-attendance', [App\Http\Controllers\API\AttendanceController::class, 'saveAttendance']);
 });

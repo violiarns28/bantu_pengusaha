@@ -36,7 +36,7 @@ class HomeController extends Controller
 
             $item->date = $datetime->format('l, j F Y');
         }
-
+        // dd($presensis);
         return view('home', [
             'attendances' => $attendances
         ]);

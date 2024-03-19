@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">User List</div>
+                <div class="card-header">User Detail</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ url('store-user') }}" enctype="multipart/form-data">

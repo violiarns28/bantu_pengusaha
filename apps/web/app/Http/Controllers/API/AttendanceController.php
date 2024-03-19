@@ -27,9 +27,9 @@ class AttendanceController extends Controller
             $clock_in = Carbon::parse($item->clock_in)->locale('id');
             $clock_out = Carbon::parse($item->clock_out)->locale('id');
 
-            $datetime->settings(['formatFunction' => 'translatedFormat']);
-            $clock_in->settings(['formatFunction' => 'translatedFormat']);
-            $clock_out->settings(['formatFunction' => 'translatedFormat']);
+            // $datetime->settings(['formatFunction' => 'translatedFormat']);
+            // $clock_in->settings(['formatFunction' => 'translatedFormat']);
+            // $clock_out->settings(['formatFunction' => 'translatedFormat']);
 
             $item->date = $datetime->format('l, j F Y');
             $item->clock_in = $clock_in->format('H:i');
@@ -38,7 +38,7 @@ class AttendanceController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Sukses menampilkan data',
+            'message' => 'Successful show data',
             'data' => $attendances
         ]);
     }
@@ -57,31 +57,39 @@ class AttendanceController extends Controller
                 'clock_in' => date('H:i:s'),
                 'clock_out' => null
             ]);
+            // if ($attendance == null) {
+            // $attendance = Attendance::create([
+            //     'user_id' => Auth::user()->id,
+            //     'latitude' => $request->latitude,
+            //     'longitude' => $request->longitude,
+            //     'date' => date('Y-m-d'),
+            //     'clock_in' => date('H:i:s'),
+            //     'clock_out' => null
+            // ]);
             return response()->json([
                 'success' => true,
-                'message' => 'Sukses absen untuk clock_in',
+                'message' => 'Clock in successful',
                 'data' => $attendance
             ]);
         } else {
             if ($attendance->clock_out !== null) {
-                $information = "Anda sudah melakukan presensi";
+                $information = "You've already presence";
                 return response()->json([
                     'success' => false,
                     'message' => $information,
                     'data' => null
                 ]);
             } else {
-                $data = [
+                $attendance->update([
                     'clock_out' => date('H:i:s')
-                ];
-                Attendance::whereDate('date', '=', date('Y-m-d'))->update($data);
+                ]);
             }
             $attendance = Attendance::whereDate('date', '=', date('Y-m-d'))
                 ->first();
 
             return response()->json([
                 'success' => true,
-                'message' => 'Sukses Absen untuk clock_out',
+                'message' => 'Clock out successful',
                 'data' => $attendance
             ]);
         }

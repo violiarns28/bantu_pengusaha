@@ -22,9 +22,8 @@ class Attendance extends Model
         'latitude',
         'longitude',
         'date',
-        'clock-in',
+        'clock_in',
         'clock_out',
-        'status',
         'created_at'
     ];
 }

@@ -14,20 +14,20 @@ class ClockInView extends StatelessWidget {
             child: Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 340),
+                  padding: const EdgeInsets.only(top: 440),
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     width: double.infinity,
                     height: double.infinity,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(50),
-                        topRight: Radius.circular(50),
-                      ),
+                      // borderRadius: const BorderRadius.only(
+                      //   topLeft: Radius.circular(10),
+                      //   topRight: Radius.circular(50),
+                      // ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 180),
+                      padding: const EdgeInsets.only(bottom: 100),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -111,7 +111,7 @@ class ClockInView extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  bottom: 350,
+                  bottom: 270,
                   left: 0,
                   right: 0,
                   child: Center(
@@ -163,7 +163,7 @@ class ClockInView extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  bottom: 160,
+                  bottom: 80,
                   left: 0,
                   right: 0,
                   child: Center(
@@ -190,7 +190,7 @@ class ClockInView extends StatelessWidget {
                           ),
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0xFF3559A0),
+                              const Color(0xFF3559A0).withOpacity(0.54),
                             ),
                           ),
                         ),
@@ -220,7 +220,7 @@ void showOkToast(BuildContext context) {
         'Clock In Successful!',
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize: 20.0,
+          fontSize: 16.0,
           fontWeight: FontWeight.w500,
           color: Colors.black,
         ),

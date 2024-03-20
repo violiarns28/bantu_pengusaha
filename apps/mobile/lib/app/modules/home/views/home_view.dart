@@ -25,7 +25,7 @@ class HomeView extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(26, 10, 0, 0),
+                padding: const EdgeInsets.fromLTRB(26, 20, 0, 0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

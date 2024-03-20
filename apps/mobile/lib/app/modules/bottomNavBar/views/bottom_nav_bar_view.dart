@@ -1,9 +1,9 @@
+import 'package:bantu_pengusaha/app/modules/clock_in/views/clock_in_view.dart';
 import 'package:bantu_pengusaha/app/modules/home/views/home_view.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
 
-import '../../clock_in/views/clock_in_view.dart';
 import '../../profile/views/profile_view.dart';
 
 class BottomNavBarView extends StatefulWidget {

@@ -24,7 +24,7 @@ class ProfileController extends GetxController {
   }
 
   void logout() async {
-    var res = await Network().getData('/auth/logout');
+    var res = await Network().getData('/logout');
     var body = json.decode(res.body);
     debugPrint(res.body);
     if (body['success']) {

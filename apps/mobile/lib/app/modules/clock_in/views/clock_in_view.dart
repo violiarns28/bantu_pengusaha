@@ -111,7 +111,7 @@ class ClockInView extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  bottom: 370,
+                  bottom: 350,
                   left: 0,
                   right: 0,
                   child: Center(

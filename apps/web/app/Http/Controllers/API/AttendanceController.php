@@ -57,15 +57,6 @@ class AttendanceController extends Controller
                 'clock_in' => date('H:i:s'),
                 'clock_out' => null
             ]);
-            // if ($attendance == null) {
-            // $attendance = Attendance::create([
-            //     'user_id' => Auth::user()->id,
-            //     'latitude' => $request->latitude,
-            //     'longitude' => $request->longitude,
-            //     'date' => date('Y-m-d'),
-            //     'clock_in' => date('H:i:s'),
-            //     'clock_out' => null
-            // ]);
             return response()->json([
                 'success' => true,
                 'message' => 'Clock in successful',

@@ -1,11 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../network/api.dart';
-import '../../home/views/home_view.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
@@ -129,11 +124,10 @@ class LoginView extends GetView<LoginController> {
                     width: 263,
                     height: 52,
                     child: ElevatedButton(
-                      onPressed:  (){
+                      onPressed: () {
                         final c = controller;
                         c.login(c.email.text, c.password.text);
                       },
-
                       child: const Text(
                         "Login",
                         style: TextStyle(
@@ -141,7 +135,6 @@ class LoginView extends GetView<LoginController> {
                             fontSize: 24.0,
                             fontWeight: FontWeight.w600),
                       ),
-
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                             const Color(0xFF3559A0)),

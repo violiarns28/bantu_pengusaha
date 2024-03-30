@@ -1,11 +1,9 @@
 import 'package:get/get.dart';
 
+import '../modules/attendance/bindings/attendance_binding.dart';
+import '../modules/attendance/views/attendance_view.dart';
 import '../modules/bottomNavBar/bindings/bottom_nav_bar_binding.dart';
 import '../modules/bottomNavBar/views/bottom_nav_bar_view.dart';
-import '../modules/clock_in/bindings/attendance_binding.dart';
-import '../modules/clock_in/views/clock_in_view.dart';
-import '../modules/clock_out/bindings/clock_out_binding.dart';
-import '../modules/clock_out/views/clock_out_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -25,7 +23,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () => const HomeView(),
+      page: () => HomeView(),
       binding: HomeBinding(),
     ),
     GetPage(
@@ -39,16 +37,6 @@ class AppPages {
       binding: LoginBinding(),
     ),
     GetPage(
-      name: _Paths.CLOCK_OUT,
-      page: () => const ClockOutView(),
-      binding: ClockOutBinding(),
-    ),
-    GetPage(
-      name: _Paths.CLOCK_IN,
-      page: () => const ClockInView(),
-      binding: ClockInBinding(),
-    ),
-    GetPage(
       name: _Paths.PROFILE,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
@@ -57,6 +45,11 @@ class AppPages {
       name: _Paths.BOTTOM_NAV_BAR,
       page: () => BottomNavBarView(),
       binding: BottomNavBarBinding(),
+    ),
+    GetPage(
+      name: _Paths.ATTENDANCE,
+      page: () => const AttendanceView(),
+      binding: AttendanceBinding(),
     ),
   ];
 }

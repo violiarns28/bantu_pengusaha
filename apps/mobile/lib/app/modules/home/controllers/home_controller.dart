@@ -1,58 +1,47 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
+import 'package:http/http.dart' as myHttp;
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../data/models/home_response.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
-
-  var tabIndex = 0;
-
-  void changeTabIndex(int index) {
-    tabIndex = index;
-
-    update();
-  }
-
-  final count = 0.obs;
-
-  // var userData;
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  late Future<String> name, _token;
+  HomeResponseModel? homeResponseModel;
+  HistoryData? today;
+  List<HistoryData> history = [];
 
   @override
   void onInit() {
-    // _getUserInfo();
-
     super.onInit();
+    _token = _prefs.then((SharedPreferences prefs) {
+      return prefs.getString("token") ?? "";
+    });
+
+    name = _prefs.then((SharedPreferences prefs) {
+      return prefs.getString("name") ?? "";
+    });
   }
 
-  // void _getUserInfo() async {
+  Future<void> getData() async {
+    var token = await _token;
 
-  //   SharedPreferences localStorage = await SharedPreferences.getInstance();
+    Map<String, String> headres = {'Authorization': 'Bearer $token'};
 
-  //   var userJson = localStorage.getString('User');
+    var response = await myHttp.get(
+        Uri.parse('https://192.168.1.56:3000/api/get-attendances'),
+        headers: headres);
 
-  //   var user = json.decode(userJson!);
-
-  //   setState(() {
-
-  //     userData = user;
-
-  //   });
-
-  // }
-
-  @override
-  void onReady() {
-// Future.delayed(const Duration(seconds: 3), () {
-
-// Get.offAllNamed(Routes.CLOCK_IN);
-
-// });
-
-    super.onReady();
+    homeResponseModel = HomeResponseModel.fromJson(json.decode(response.body));
+    history.clear();
+    homeResponseModel!.data.forEach((element) {
+      if (element.isToday) {
+        today = element;
+      } else {
+        history.add(element);
+      }
+    });
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

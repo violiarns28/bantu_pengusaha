@@ -24,6 +24,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
 
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
-    Route::get('/get-attendance',  [App\Http\Controllers\API\AttendanceController::class, 'getAttendances']);
+    Route::get('/get-attendances',  [App\Http\Controllers\API\AttendanceController::class, 'getAttendances']);
     Route::post('/save-attendance', [App\Http\Controllers\API\AttendanceController::class, 'saveAttendance']);
 });

@@ -1,4 +1,4 @@
-import 'package:bantu_pengusaha/app/modules/clock_in/views/clock_in_view.dart';
+import 'package:bantu_pengusaha/app/modules/attendance/views/attendance_view.dart';
 import 'package:bantu_pengusaha/app/modules/home/views/home_view.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
@@ -29,7 +29,7 @@ class BottomNavBarViewState extends State<BottomNavBarView> {
         index: tabIndex,
         children: [
           HomeView(),
-          ClockInView(),
+          AttendanceView(),
           ProfileView(),
         ],
       ),
@@ -37,7 +37,7 @@ class BottomNavBarViewState extends State<BottomNavBarView> {
         items: [
           CurvedNavigationBarItem(
             child: Icon(
-              Icons.home_outlined,
+              Icons.home_filled,
               color: tabIndex == 0 ? Colors.white : Colors.black,
             ),
             label: 'Home',

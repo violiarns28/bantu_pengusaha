@@ -18,7 +18,7 @@ class CreateTableAttendances extends Migration
             $table->integer('user_id');
             $table->decimal('latitude', 12, 5);
             $table->decimal('longitude', 12, 5);
-            $table->date('date');
+            $table->datetime('date');
             $table->time('clock_in');
             $table->time('clock_out')->nullable(true);
             $table->timestamps();

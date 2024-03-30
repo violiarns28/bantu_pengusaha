@@ -27,10 +27,6 @@ class AttendanceController extends Controller
             $clock_in = Carbon::parse($item->clock_in)->locale('id');
             $clock_out = Carbon::parse($item->clock_out)->locale('id');
 
-            // $datetime->settings(['formatFunction' => 'translatedFormat']);
-            // $clock_in->settings(['formatFunction' => 'translatedFormat']);
-            // $clock_out->settings(['formatFunction' => 'translatedFormat']);
-
             $item->date = $datetime->format('l, j F Y');
             $item->clock_in = $clock_in->format('H:i');
             $item->clock_out = $clock_out->format('H:i');
@@ -42,6 +38,7 @@ class AttendanceController extends Controller
             'data' => $attendances
         ]);
     }
+
     function saveAttendance(Request $request)
     {
         $information = "";
@@ -64,7 +61,7 @@ class AttendanceController extends Controller
             ]);
         } else {
             if ($attendance->clock_out !== null) {
-                $information = "You've already presence";
+                $information = "You've already presence today";
                 return response()->json([
                     'success' => false,
                     'message' => $information,

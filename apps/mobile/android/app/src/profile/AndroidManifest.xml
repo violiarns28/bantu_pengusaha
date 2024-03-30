@@ -4,4 +4,5 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <meta-data android:name="com.google.android.goo.    API_KEY" android:values="AIzaSyD0lNiG91bJSTts6flFqdxxKx2jdFs4eQw">
 </manifest>

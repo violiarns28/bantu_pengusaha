@@ -121,7 +121,7 @@ class LoginView extends GetView<LoginController> {
                   borderRadius: BorderRadius.circular(24),
                   color: const Color(0xFFEDF0F6),
                   child: SizedBox(
-                    width: 263,
+                    width: 210,
                     height: 52,
                     child: ElevatedButton(
                       onPressed: () {
@@ -132,8 +132,8 @@ class LoginView extends GetView<LoginController> {
                         "Login",
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.w600),
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w500),
                       ),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(

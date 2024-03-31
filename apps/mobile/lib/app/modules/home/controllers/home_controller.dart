@@ -1,47 +1,58 @@
-import 'dart:convert';
-
+import 'package:bantu_pengusaha/app/network/api.dart';
+import 'package:bantu_pengusaha/utils/logger.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as myHttp;
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../data/models/home_response.dart';
 
 class HomeController extends GetxController {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  late Future<String> name, _token;
-  HomeResponseModel? homeResponseModel;
-  HistoryData? today;
+  SharedPreferences? _prefs;
+  final name = "".obs;
+  final _token = "".obs;
+  Rx<HistoryData?> today = Rx<HistoryData?>(null);
   List<HistoryData> history = [];
+  final network = Network();
 
   @override
   void onInit() {
+    initializeSP();
     super.onInit();
-    _token = _prefs.then((SharedPreferences prefs) {
-      return prefs.getString("token") ?? "";
-    });
+  }
 
-    name = _prefs.then((SharedPreferences prefs) {
-      return prefs.getString("name") ?? "";
-    });
+  void initializeSP() async {
+    _prefs ??= await SharedPreferences.getInstance();
+    final tRes = _prefs!.getString("token") ?? "";
+    _token.value = tRes;
+    final nRes = _prefs!.getString("name") ?? "";
+    name.value = nRes;
   }
 
   Future<void> getData() async {
-    var token = await _token;
-
-    Map<String, String> headres = {'Authorization': 'Bearer $token'};
-
-    var response = await myHttp.get(
-        Uri.parse('https://192.168.1.7:3000/api/get-attendances'),
-        headers: headres);
-
-    homeResponseModel = HomeResponseModel.fromJson(json.decode(response.body));
     history.clear();
-    homeResponseModel!.data.forEach((element) {
-      if (element.isToday) {
-        today = element;
+    history = await network.getAttendance();
+    log.e("History: $history");
+    final now = DateTime.now();
+    for (var element in history) {
+      log.e("iter History: ${element.toJson()}");
+      log.f("element: ${element.toJson()}");
+
+      if (element.date.day == now.day) {
+        today.value = element;
       } else {
         history.add(element);
       }
-    });
+    }
+  }
+
+  String formatDate(DateTime date) {
+    final formatter = DateFormat('dd MMMM yyyy');
+    return formatter.format(date);
+  }
+
+  String getHHmm(String? time) {
+    if (time == null) return "-- : --";
+    final split = time.split(":");
+    return "${split[0]}:${split[1]}";
   }
 }

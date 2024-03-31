@@ -37,12 +37,12 @@ class HistoryData {
   int userId;
   String latitude;
   String longitude;
-  String date;
-  String clockIn;
-  String clockOut;
+  DateTime date;
+  String? clockIn;
+  String? clockOut;
   DateTime createdAt;
   DateTime updatedAt;
-  bool isToday;
+  // bool isToday;
 
   HistoryData({
     required this.id,
@@ -54,7 +54,7 @@ class HistoryData {
     required this.clockOut,
     required this.createdAt,
     required this.updatedAt,
-    required this.isToday,
+    // required this.isToday,
   });
 
   factory HistoryData.fromJson(Map<String, dynamic> json) => HistoryData(
@@ -62,12 +62,12 @@ class HistoryData {
         userId: json["user_id"],
         latitude: json["latitude"],
         longitude: json["longitude"],
-        date: json["date"],
+        date: DateTime.parse(json["date"]),
         clockIn: json["clock_in"],
         clockOut: json["clock_out"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        isToday: json["is_today"],
+        // isToday: json["is_today"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -80,6 +80,6 @@ class HistoryData {
         "clock_out": clockOut,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
-        "is_today": isToday,
+        // "is_today": isToday,
       };
 }

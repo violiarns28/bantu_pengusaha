@@ -1,20 +1,24 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 import '../controllers/attendance_controller.dart';
 
 class AttendanceView extends GetView<AttendanceController> {
-  const AttendanceView({Key? key});
+  const AttendanceView({super.key});
 
   @override
   Widget build(BuildContext context) {
     Get.put(AttendanceController());
+    final Completer<GoogleMapController> gC = Completer<GoogleMapController>();
     return Scaffold(
       backgroundColor: Colors.white,
-      body: FutureBuilder<LatLng?>(
+      body: FutureBuilder<LocationData?>(
         future: controller.getCurrentLocation(),
-        builder: (BuildContext context, AsyncSnapshot<LatLng?> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<LocationData?> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -29,45 +33,80 @@ class AttendanceView extends GetView<AttendanceController> {
             );
           }
 
-          final LatLng currentLocation = snapshot.data!;
+          final LocationData currentLocation = snapshot.data!;
 
-          Set<Circle> circles = Set.from([
-            const Circle(
-              circleId: CircleId('currentCircle'),
-              center: LatLng(-7.3585689, 112.7413656),
-              radius: 10,
-            )
-          ]);
+          CameraPosition kGooglePlex = CameraPosition(
+            target: LatLng(
+                currentLocation.latitude ?? 0, currentLocation.longitude ?? 0),
+            zoom: 25,
+          );
+
           return Column(
             children: [
               Expanded(
                 child: Stack(
                   children: [
+                    // SizedBox(
+                    //   height: 377,
+                    //   child: SfMaps(
+                    //     layers: [
+                    //       MapTileLayer(
+                    //         initialFocalLatLng: MapLatLng(
+                    //           currentLocation.latitude!,
+                    //           currentLocation.longitude!,
+                    //         ),
+                    //         initialZoomLevel: 15,
+                    //         initialMarkersCount: 1,
+                    //         urlTemplate:
+                    //             "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    //         markerBuilder: (BuildContext context, int index) {
+                    //           return MapMarker(
+                    //             latitude: currentLocation.latitude!,
+                    //             longitude: currentLocation.longitude!,
+                    //             child: const Icon(
+                    //               Icons.location_on,
+                    //               color: Colors.red,
+                    //             ),
+                    //           );
+                    //         },
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
                     SizedBox(
                       height: 377,
                       child: GoogleMap(
                         mapType: MapType.normal,
-                        myLocationEnabled: true,
-                        myLocationButtonEnabled: true,
-                        initialCameraPosition: CameraPosition(
-                          target: currentLocation,
-                          zoom: 25,
-                        ),
-                        onCameraMove: null,
-                        circles: circles,
+                        initialCameraPosition: kGooglePlex,
+                        onMapCreated: (GoogleMapController controller) {
+                          gC.complete(controller);
+                        },
                         markers: {
                           Marker(
-                            markerId: const MarkerId('currentLocation'),
-                            position: currentLocation,
-                            icon: BitmapDescriptor.defaultMarkerWithHue(
-                              BitmapDescriptor.hueRed,
+                            markerId: MarkerId('currentLocation'),
+                            position: LatLng(
+                              currentLocation.latitude!,
+                              currentLocation.longitude!,
                             ),
+                          ),
+                        },
+                        circles: {
+                          Circle(
+                            circleId: CircleId('currentLocation'),
+                            center: LatLng(
+                              0.0000,
+                              0.0000,
+                            ),
+                            // 10 meters radius
+                            radius: 10,
+                            fillColor: Colors.blue.withOpacity(0.5),
+                            strokeWidth: 0,
                           ),
                         },
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 500),
+                      padding: const EdgeInsets.only(top: 440),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -79,13 +118,13 @@ class AttendanceView extends GetView<AttendanceController> {
                               padding: const EdgeInsets.all(8),
                               width: 103,
                               height: 82,
-                              child: const Column(
+                              child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 8,
                                   ),
-                                  Text(
+                                  const Text(
                                     "Clock In",
                                     style: TextStyle(
                                       fontSize: 16.0,
@@ -93,17 +132,18 @@ class AttendanceView extends GetView<AttendanceController> {
                                       color: Color(0xFF000000),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 8,
                                   ),
-                                  Text(
-                                    "07 : 49",
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.green,
-                                    ),
-                                  )
+                                  Obx(() => Text(
+                                        controller.getHHmm(
+                                            controller.today.value?.clockIn),
+                                        style: const TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.green,
+                                        ),
+                                      ))
                                 ],
                               ),
                             ),
@@ -116,13 +156,13 @@ class AttendanceView extends GetView<AttendanceController> {
                               padding: const EdgeInsets.all(8),
                               width: 103,
                               height: 82,
-                              child: const Column(
+                              child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 8,
                                   ),
-                                  Text(
+                                  const Text(
                                     "Clock Out",
                                     style: TextStyle(
                                       fontSize: 16.0,
@@ -130,17 +170,18 @@ class AttendanceView extends GetView<AttendanceController> {
                                       color: Color(0xFF000000),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 8,
                                   ),
-                                  Text(
-                                    "-- : --",
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.red,
-                                    ),
-                                  )
+                                  Obx(() => Text(
+                                        controller.getHHmm(
+                                            controller.today.value?.clockOut),
+                                        style: const TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.red,
+                                        ),
+                                      ))
                                 ],
                               ),
                             ),
@@ -149,7 +190,7 @@ class AttendanceView extends GetView<AttendanceController> {
                       ),
                     ),
                     Positioned(
-                      bottom: 240,
+                      bottom: 330,
                       left: 0,
                       right: 0,
                       child: Center(
@@ -201,7 +242,7 @@ class AttendanceView extends GetView<AttendanceController> {
                       ),
                     ),
                     Positioned(
-                      bottom: 60,
+                      bottom: 140,
                       left: 0,
                       right: 0,
                       child: Center(
@@ -212,56 +253,9 @@ class AttendanceView extends GetView<AttendanceController> {
                           child: SizedBox(
                             width: 200,
                             height: 52,
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                double distance = controller.calculateDistance(
-                                  currentLocation.latitude,
-                                  currentLocation.longitude,
-                                  -7.3585689,
-                                  112.7413656,
-                                );
-                                if (distance <= 10) {
-                                  controller.saveAttendance(
-                                    context,
-                                    currentLocation.latitude,
-                                    currentLocation.longitude,
-                                  );
-                                } else {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: const Text('Error'),
-                                        content: const Text(
-                                            'You are more than 10 meters away from the office.'),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: const Text('OK'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                }
-                              },
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                  const Color(0xFF3559A0),
-                                ),
-                              ),
-                              child: const Text(
-                                "Clock In",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
+                            child: ClockInOutButton(
+                                controller: controller,
+                                currentLocation: currentLocation),
                           ),
                         ),
                       ),
@@ -274,5 +268,58 @@ class AttendanceView extends GetView<AttendanceController> {
         },
       ),
     );
+  }
+}
+
+class ClockInOutButton extends StatelessWidget {
+  const ClockInOutButton({
+    super.key,
+    required this.controller,
+    required this.currentLocation,
+  });
+
+  final AttendanceController controller;
+  final LocationData currentLocation;
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      return ElevatedButton(
+        onPressed: () {
+          controller.saveAttendance(
+            context,
+            currentLocation.latitude!,
+            currentLocation.longitude!,
+          );
+        },
+        style: ButtonStyle(
+          backgroundColor: (controller.today.value?.clockIn == null ||
+                  controller.today.value?.clockOut == null)
+              ? MaterialStateProperty.all<Color>(
+                  const Color(0xFF3559A0),
+                )
+              : MaterialStateProperty.all<Color>(
+                  Color.fromARGB(255, 69, 72, 80)),
+        ),
+        child: (controller.today.value?.clockIn == null ||
+                controller.today.value?.clockOut == null)
+            ? Text(
+                controller.today.value == null ? "Clock In" : "Clock Out",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w500,
+                ),
+              )
+            : Text(
+                'Already Clocked In/Out',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+      );
+    });
   }
 }

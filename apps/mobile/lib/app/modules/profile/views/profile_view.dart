@@ -9,7 +9,6 @@ class ProfileView extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ProfileController());
     final size = MediaQuery.of(context).size;
     final width = size.width;
     return Scaffold(
@@ -85,26 +84,23 @@ class ProfileView extends GetView<ProfileController> {
           Positioned(
             top: 80,
             left: (width - 100) / 2,
-            child: GestureDetector(
-              onTap: () {
-                controller.showImagePickerOption(context);
-              },
-              child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.grey.shade800,
-                    ),
-                  ),
-                  child: CircleAvatar(
-                    radius: 50,
-                    backgroundImage: controller.selectedImage != null
-                        ? FileImage(controller.selectedImage!)
-                        : const NetworkImage(
-                                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png")
-                            as ImageProvider<Object>,
-                  )),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                border: Border.all(
+                  width: 2,
+                  color: Colors.black,
+                ),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: const Image(
+                  image: AssetImage('assets/images/profile.jpg'),
+                  fit: BoxFit.cover,
+                  width: 100,
+                  height: 100,
+                ),
+              ),
             ),
           ),
         ],

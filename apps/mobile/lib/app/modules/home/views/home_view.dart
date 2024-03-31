@@ -4,19 +4,19 @@ import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends StatelessWidget {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({super.key});
+  @override
   Widget build(BuildContext context) {
     final HomeController controller = Get.put(HomeController());
 
     final size = MediaQuery.of(context).size;
     final height = size.height;
-    final width = size.width;
     return Scaffold(
       body: FutureBuilder(
           future: controller.getData(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else {
               return Scaffold(
                 backgroundColor: const Color(0xFFB9CFFC),
@@ -30,7 +30,7 @@ class HomeView extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.normal,
-                          color: Color(0xFF000000).withOpacity(0.7),
+                          color: const Color(0xFF000000).withOpacity(0.7),
                         ),
                       ),
                     ),
@@ -68,7 +68,7 @@ class HomeView extends StatelessWidget {
                                         AsyncSnapshot<String> snapshot) {
                                       if (snapshot.connectionState ==
                                           ConnectionState.waiting) {
-                                        return CircularProgressIndicator();
+                                        return const CircularProgressIndicator();
                                       } else {
                                         if (snapshot.hasData) {
                                           // print(snapshot.data);
@@ -76,7 +76,7 @@ class HomeView extends StatelessWidget {
                                               style: TextStyle(
                                                 fontSize: 16.0,
                                                 fontWeight: FontWeight.normal,
-                                                color: Color(0xFF000000)
+                                                color: const Color(0xFF000000)
                                                     .withOpacity(0.7),
                                               ));
                                         } else {
@@ -84,7 +84,7 @@ class HomeView extends StatelessWidget {
                                               style: TextStyle(
                                                 fontSize: 16.0,
                                                 fontWeight: FontWeight.normal,
-                                                color: Color(0xFF000000)
+                                                color: const Color(0xFF000000)
                                                     .withOpacity(0.7),
                                               ));
                                         }
@@ -97,7 +97,8 @@ class HomeView extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.normal,
-                                      color: Color(0xFF000000).withOpacity(0.7),
+                                      color: const Color(0xFF000000)
+                                          .withOpacity(0.7),
                                     ),
                                   ),
                                 ),
@@ -107,19 +108,20 @@ class HomeView extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Expanded(child: SizedBox(height: 30)),
+                    const Expanded(child: SizedBox(height: 30)),
                     Stack(
                       children: [
                         Column(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 71 / 2,
                             ),
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: 24),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 24),
                               width: double.infinity,
                               height: 520,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(50),
@@ -129,8 +131,8 @@ class HomeView extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(height: 50),
-                                  Text(
+                                  const SizedBox(height: 50),
+                                  const Text(
                                     "Today Attendance",
                                     style: TextStyle(
                                       fontSize: 18.0,
@@ -138,7 +140,7 @@ class HomeView extends StatelessWidget {
                                       color: Color(0xFF000000),
                                     ),
                                   ),
-                                  SizedBox(height: 20),
+                                  const SizedBox(height: 20),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -146,9 +148,9 @@ class HomeView extends StatelessWidget {
                                       Material(
                                         elevation: 8,
                                         borderRadius: BorderRadius.circular(20),
-                                        color: Color(0xFFEDF0F6),
+                                        color: const Color(0xFFEDF0F6),
                                         child: Container(
-                                          padding: EdgeInsets.all(16),
+                                          padding: const EdgeInsets.all(16),
                                           width: 162,
                                           height: 130,
                                           child: Column(
@@ -158,17 +160,19 @@ class HomeView extends StatelessWidget {
                                               Row(
                                                 children: [
                                                   Container(
-                                                    padding: EdgeInsets.all(2),
+                                                    padding:
+                                                        const EdgeInsets.all(2),
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xFFC7D2E7),
+                                                      color: const Color(
+                                                          0xFFC7D2E7),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               8),
                                                     ),
-                                                    child: Icon(
+                                                    child: const Icon(
                                                         Icons.login_rounded),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 8,
                                                   ),
                                                   Text(
@@ -177,16 +181,17 @@ class HomeView extends StatelessWidget {
                                                       fontSize: 16.0,
                                                       fontWeight:
                                                           FontWeight.w500,
-                                                      color: Color(0xFF000000)
+                                                      color: const Color(
+                                                              0xFF000000)
                                                           .withOpacity(0.65),
                                                     ),
                                                   )
                                                 ],
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 16,
                                               ),
-                                              Text(
+                                              const Text(
                                                 "07:49",
                                                 style: TextStyle(
                                                   fontSize: 18.0,
@@ -194,7 +199,7 @@ class HomeView extends StatelessWidget {
                                                   color: Color(0xFF000000),
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 8,
                                               ),
                                               Text(
@@ -202,7 +207,7 @@ class HomeView extends StatelessWidget {
                                                 style: TextStyle(
                                                   fontSize: 14.0,
                                                   fontWeight: FontWeight.w500,
-                                                  color: Color(0xFF000000)
+                                                  color: const Color(0xFF000000)
                                                       .withOpacity(0.5),
                                                 ),
                                               )
@@ -213,9 +218,9 @@ class HomeView extends StatelessWidget {
                                       Material(
                                         elevation: 8,
                                         borderRadius: BorderRadius.circular(20),
-                                        color: Color(0xFFEDF0F6),
+                                        color: const Color(0xFFEDF0F6),
                                         child: Container(
-                                          padding: EdgeInsets.all(16),
+                                          padding: const EdgeInsets.all(16),
                                           width: 162,
                                           height: 130,
                                           child: Column(
@@ -225,17 +230,19 @@ class HomeView extends StatelessWidget {
                                               Row(
                                                 children: [
                                                   Container(
-                                                    padding: EdgeInsets.all(2),
+                                                    padding:
+                                                        const EdgeInsets.all(2),
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xFFC7D2E7),
+                                                      color: const Color(
+                                                          0xFFC7D2E7),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               8),
                                                     ),
-                                                    child: Icon(
+                                                    child: const Icon(
                                                         Icons.logout_rounded),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 8,
                                                   ),
                                                   Text(
@@ -244,16 +251,17 @@ class HomeView extends StatelessWidget {
                                                       fontSize: 16.0,
                                                       fontWeight:
                                                           FontWeight.w500,
-                                                      color: Color(0xFF000000)
+                                                      color: const Color(
+                                                              0xFF000000)
                                                           .withOpacity(0.65),
                                                     ),
                                                   )
                                                 ],
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 16,
                                               ),
-                                              Text(
+                                              const Text(
                                                 "18:00",
                                                 style: TextStyle(
                                                   fontSize: 18.0,
@@ -261,7 +269,7 @@ class HomeView extends StatelessWidget {
                                                   color: Color(0xFF000000),
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 8,
                                               ),
                                               Text(
@@ -269,7 +277,7 @@ class HomeView extends StatelessWidget {
                                                 style: TextStyle(
                                                   fontSize: 14.0,
                                                   fontWeight: FontWeight.w500,
-                                                  color: Color(0xFF000000)
+                                                  color: const Color(0xFF000000)
                                                       .withOpacity(0.5),
                                                 ),
                                               )
@@ -279,7 +287,7 @@ class HomeView extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 24),
+                                  const SizedBox(height: 24),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -287,9 +295,9 @@ class HomeView extends StatelessWidget {
                                       Material(
                                         elevation: 8,
                                         borderRadius: BorderRadius.circular(20),
-                                        color: Color(0xFFEDF0F6),
+                                        color: const Color(0xFFEDF0F6),
                                         child: Container(
-                                          padding: EdgeInsets.all(16),
+                                          padding: const EdgeInsets.all(16),
                                           width: 162,
                                           height: 130,
                                           child: Column(
@@ -299,17 +307,19 @@ class HomeView extends StatelessWidget {
                                               Row(
                                                 children: [
                                                   Container(
-                                                    padding: EdgeInsets.all(2),
+                                                    padding:
+                                                        const EdgeInsets.all(2),
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xFFC7D2E7),
+                                                      color: const Color(
+                                                          0xFFC7D2E7),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               8),
                                                     ),
-                                                    child: Icon(Icons
+                                                    child: const Icon(Icons
                                                         .timelapse_rounded),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 8,
                                                   ),
                                                   Text(
@@ -318,16 +328,17 @@ class HomeView extends StatelessWidget {
                                                       fontSize: 16.0,
                                                       fontWeight:
                                                           FontWeight.w500,
-                                                      color: Color(0xFF000000)
+                                                      color: const Color(
+                                                              0xFF000000)
                                                           .withOpacity(0.65),
                                                     ),
                                                   )
                                                 ],
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 16,
                                               ),
-                                              Text(
+                                              const Text(
                                                 "2",
                                                 style: TextStyle(
                                                   fontSize: 18.0,
@@ -335,7 +346,7 @@ class HomeView extends StatelessWidget {
                                                   color: Color(0xFF000000),
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 8,
                                               ),
                                               Text(
@@ -343,7 +354,7 @@ class HomeView extends StatelessWidget {
                                                 style: TextStyle(
                                                   fontSize: 14.0,
                                                   fontWeight: FontWeight.w500,
-                                                  color: Color(0xFF000000)
+                                                  color: const Color(0xFF000000)
                                                       .withOpacity(0.5),
                                                 ),
                                               )
@@ -354,9 +365,9 @@ class HomeView extends StatelessWidget {
                                       Material(
                                         elevation: 8,
                                         borderRadius: BorderRadius.circular(20),
-                                        color: Color(0xFFEDF0F6),
+                                        color: const Color(0xFFEDF0F6),
                                         child: Container(
-                                          padding: EdgeInsets.all(16),
+                                          padding: const EdgeInsets.all(16),
                                           width: 162,
                                           height: 130,
                                           child: Column(
@@ -366,17 +377,19 @@ class HomeView extends StatelessWidget {
                                               Row(
                                                 children: [
                                                   Container(
-                                                    padding: EdgeInsets.all(2),
+                                                    padding:
+                                                        const EdgeInsets.all(2),
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xFFC7D2E7),
+                                                      color: const Color(
+                                                          0xFFC7D2E7),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               8),
                                                     ),
-                                                    child: Icon(Icons
+                                                    child: const Icon(Icons
                                                         .calendar_month_rounded),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 8,
                                                   ),
                                                   Text(
@@ -385,16 +398,17 @@ class HomeView extends StatelessWidget {
                                                       fontSize: 16.0,
                                                       fontWeight:
                                                           FontWeight.w500,
-                                                      color: Color(0xFF000000)
+                                                      color: const Color(
+                                                              0xFF000000)
                                                           .withOpacity(0.65),
                                                     ),
                                                   )
                                                 ],
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 16,
                                               ),
-                                              Text(
+                                              const Text(
                                                 "12",
                                                 style: TextStyle(
                                                   fontSize: 18.0,
@@ -402,7 +416,7 @@ class HomeView extends StatelessWidget {
                                                   color: Color(0xFF000000),
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 8,
                                               ),
                                               Text(
@@ -410,7 +424,7 @@ class HomeView extends StatelessWidget {
                                                 style: TextStyle(
                                                   fontSize: 14.0,
                                                   fontWeight: FontWeight.w500,
-                                                  color: Color(0xFF000000)
+                                                  color: const Color(0xFF000000)
                                                       .withOpacity(0.5),
                                                 ),
                                               )
@@ -429,7 +443,7 @@ class HomeView extends StatelessWidget {
                           child: Container(
                             width: 297,
                             height: height / 11.4,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(15),
                               ), // fixed radius syntax
@@ -439,11 +453,11 @@ class HomeView extends StatelessWidget {
                                 fit: BoxFit.cover, // Image fit property
                               ),
                             ),
-                            child: Row(
+                            child: const Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(
+                                  padding: EdgeInsets.fromLTRB(
                                       15, 16, 5, 0), // Padding for the icon
                                   child: Icon(
                                     Icons.location_on,
@@ -456,7 +470,7 @@ class HomeView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(
+                                      padding: EdgeInsets.only(
                                           top:
                                               10), // Padding for the "Location" text
                                       child: Text(

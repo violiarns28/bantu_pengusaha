@@ -23,7 +23,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () => HomeView(),
+      page: () => const HomeView(),
       binding: HomeBinding(),
     ),
     GetPage(
@@ -43,7 +43,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.BOTTOM_NAV_BAR,
-      page: () => BottomNavBarView(),
+      page: () => const BottomNavBarView(),
       binding: BottomNavBarBinding(),
     ),
     GetPage(

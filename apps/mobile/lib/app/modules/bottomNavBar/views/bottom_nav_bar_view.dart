@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import '../../profile/views/profile_view.dart';
 
 class BottomNavBarView extends StatefulWidget {
-  const BottomNavBarView({Key? key}) : super(key: key);
+  const BottomNavBarView({super.key});
 
   @override
   State<BottomNavBarView> createState() => BottomNavBarViewState();
@@ -27,7 +27,7 @@ class BottomNavBarViewState extends State<BottomNavBarView> {
     return Scaffold(
       body: IndexedStack(
         index: tabIndex,
-        children: [
+        children: const [
           HomeView(),
           AttendanceView(),
           ProfileView(),
@@ -60,10 +60,10 @@ class BottomNavBarViewState extends State<BottomNavBarView> {
         backgroundColor: Colors.transparent,
         index: tabIndex,
         onTap: changeTabIndex,
-        color: Color(0xFFCFDFFC).withOpacity(0.7),
-        buttonBackgroundColor: Color(0xFF7C96CB),
+        color: const Color(0xFFCFDFFC).withOpacity(0.7),
+        buttonBackgroundColor: const Color(0xFF7C96CB),
         height: 65,
-        animationDuration: Duration(milliseconds: 200),
+        animationDuration: const Duration(milliseconds: 200),
         animationCurve: Curves.easeInOut,
       ),
     );

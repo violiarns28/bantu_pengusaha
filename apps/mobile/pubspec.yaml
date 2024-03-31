@@ -21,6 +21,8 @@ dependencies:
   google_maps_flutter: ^2.6.0
   syncfusion_flutter_maps: ^25.1.35
   provider: ^6.1.2
+  geolocator: ^11.0.0
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_lints: ^3.0.0

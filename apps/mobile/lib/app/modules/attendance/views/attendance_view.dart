@@ -1,70 +1,73 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:location/location.dart';
-import 'package:syncfusion_flutter_maps/maps.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../controllers/attendance_controller.dart';
 
 class AttendanceView extends GetView<AttendanceController> {
-  const AttendanceView({Key? key}) : super(key: key);
+  const AttendanceView({Key? key});
 
   @override
   Widget build(BuildContext context) {
     Get.put(AttendanceController());
     return Scaffold(
       backgroundColor: Colors.white,
-      body: FutureBuilder<LocationData?>(
-          future: controller.getCurrentLocation(),
-          builder:
-              (BuildContext context, AsyncSnapshot<LocationData?> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (snapshot.hasError) {
-              return const Center(
-                child: Text('Error fetching location data'),
-              );
-            } else if (!snapshot.hasData || snapshot.data == null) {
-              return const Center(
-                child: Text('Location data unavailable'),
-              );
-            }
+      body: FutureBuilder<LatLng?>(
+        future: controller.getCurrentLocation(),
+        builder: (BuildContext context, AsyncSnapshot<LatLng?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return const Center(
+              child: Text('Error fetching location data'),
+            );
+          } else if (!snapshot.hasData || snapshot.data == null) {
+            return const Center(
+              child: Text('Location data unavailable'),
+            );
+          }
 
-            final LocationData currentLocation = snapshot.data!;
-            return Column(
-              children: [
-                Expanded(
-                  child: Stack(children: [
-                    Container(
+          final LatLng currentLocation = snapshot.data!;
+
+          Set<Circle> circles = Set.from([
+            const Circle(
+              circleId: CircleId('currentCircle'),
+              center: LatLng(-7.3585689, 112.7413656),
+              radius: 10,
+            )
+          ]);
+          return Column(
+            children: [
+              Expanded(
+                child: Stack(
+                  children: [
+                    SizedBox(
                       height: 377,
-                      child: SfMaps(
-                        layers: [
-                          MapTileLayer(
-                            initialFocalLatLng: MapLatLng(
-                              currentLocation.latitude!,
-                              currentLocation.longitude!,
+                      child: GoogleMap(
+                        mapType: MapType.normal,
+                        myLocationEnabled: true,
+                        myLocationButtonEnabled: true,
+                        initialCameraPosition: CameraPosition(
+                          target: currentLocation,
+                          zoom: 25,
+                        ),
+                        onCameraMove: null,
+                        circles: circles,
+                        markers: {
+                          Marker(
+                            markerId: const MarkerId('currentLocation'),
+                            position: currentLocation,
+                            icon: BitmapDescriptor.defaultMarkerWithHue(
+                              BitmapDescriptor.hueRed,
                             ),
-                            initialZoomLevel: 15,
-                            initialMarkersCount: 1,
-                            urlTemplate:
-                                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                            markerBuilder: (BuildContext context, int index) {
-                              return MapMarker(
-                                latitude: currentLocation.latitude!,
-                                longitude: currentLocation.longitude!,
-                                child: const Icon(
-                                  Icons.location_on,
-                                  color: Colors.red,
-                                ),
-                              );
-                            },
-                          )
-                        ],
+                          ),
+                        },
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 440),
+                      padding: const EdgeInsets.only(top: 500),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -76,9 +79,9 @@ class AttendanceView extends GetView<AttendanceController> {
                               padding: const EdgeInsets.all(8),
                               width: 103,
                               height: 82,
-                              child: Column(
+                              child: const Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                children: const [
+                                children: [
                                   SizedBox(
                                     height: 8,
                                   ),
@@ -113,9 +116,9 @@ class AttendanceView extends GetView<AttendanceController> {
                               padding: const EdgeInsets.all(8),
                               width: 103,
                               height: 82,
-                              child: Column(
+                              child: const Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                children: const [
+                                children: [
                                   SizedBox(
                                     height: 8,
                                   ),
@@ -146,7 +149,7 @@ class AttendanceView extends GetView<AttendanceController> {
                       ),
                     ),
                     Positioned(
-                      bottom: 330,
+                      bottom: 240,
                       left: 0,
                       right: 0,
                       child: Center(
@@ -163,16 +166,16 @@ class AttendanceView extends GetView<AttendanceController> {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          child: Row(
+                          child: const Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               // Removed the Icon widget here
-                              const SizedBox(width: 16),
+                              SizedBox(width: 16),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 10),
+                                    padding: EdgeInsets.only(top: 10),
                                     child: Text(
                                       "Location",
                                       style: TextStyle(
@@ -198,7 +201,7 @@ class AttendanceView extends GetView<AttendanceController> {
                       ),
                     ),
                     Positioned(
-                      bottom: 140,
+                      bottom: 60,
                       left: 0,
                       right: 0,
                       child: Center(
@@ -210,13 +213,46 @@ class AttendanceView extends GetView<AttendanceController> {
                             width: 200,
                             height: 52,
                             child: ElevatedButton(
-                              onPressed: () {
-                                controller.saveAttendance(
-                                  context,
-                                  currentLocation.latitude!,
-                                  currentLocation.longitude!,
+                              onPressed: () async {
+                                double distance = controller.calculateDistance(
+                                  currentLocation.latitude,
+                                  currentLocation.longitude,
+                                  -7.3585689,
+                                  112.7413656,
                                 );
+                                if (distance <= 10) {
+                                  controller.saveAttendance(
+                                    context,
+                                    currentLocation.latitude,
+                                    currentLocation.longitude,
+                                  );
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Error'),
+                                        content: const Text(
+                                            'You are more than 10 meters away from the office.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('OK'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                               },
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                  const Color(0xFF3559A0),
+                                ),
+                              ),
                               child: const Text(
                                 "Clock In",
                                 style: TextStyle(
@@ -225,22 +261,18 @@ class AttendanceView extends GetView<AttendanceController> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                  const Color(0xFF3559A0),
-                                ),
-                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ]),
+                  ],
                 ),
-              ],
-            );
-          }),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

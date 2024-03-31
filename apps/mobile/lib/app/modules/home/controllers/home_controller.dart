@@ -31,7 +31,7 @@ class HomeController extends GetxController {
     Map<String, String> headres = {'Authorization': 'Bearer $token'};
 
     var response = await myHttp.get(
-        Uri.parse('https://192.168.1.56:3000/api/get-attendances'),
+        Uri.parse('https://192.168.1.7:3000/api/get-attendances'),
         headers: headres);
 
     homeResponseModel = HomeResponseModel.fromJson(json.decode(response.body));

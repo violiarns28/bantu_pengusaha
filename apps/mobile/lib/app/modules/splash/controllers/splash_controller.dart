@@ -22,10 +22,6 @@ class SplashController extends GetxController {
     });
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   void increment() => count.value++;
 }

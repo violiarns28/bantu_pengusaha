@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
-  const LoginView({Key? key});
+  const LoginView({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -128,16 +130,16 @@ class LoginView extends GetView<LoginController> {
                         final c = controller;
                         c.login(c.email.text, c.password.text);
                       },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            const Color(0xFF3559A0)),
+                      ),
                       child: const Text(
                         "Login",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 20.0,
                             fontWeight: FontWeight.w500),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color(0xFF3559A0)),
                       ),
                     ),
                   ),

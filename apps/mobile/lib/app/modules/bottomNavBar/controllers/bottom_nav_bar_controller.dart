@@ -17,5 +17,7 @@ class BottomNavBarController extends GetxController {
     super.onInit();
   }
 
+
+
   // void increment() => count.value++;
 }

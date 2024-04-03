@@ -25,7 +25,7 @@ class Network {
   Future<bool> getMe() async {
     final res = await getData('/me');
     final body = json.decode(res.body);
-    return body['success'] ?? false; // Add null check and default value
+    return body['success'] ?? false;
   }
 
   getData(apiURL) async {

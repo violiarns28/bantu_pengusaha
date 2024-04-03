@@ -5,26 +5,33 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
-use Auth;
-use Carbon\Carbon;
-use DB;
-use stdClass;
+use Illuminate\Support\Facades\Auth;
+
 
 date_default_timezone_set("Asia/Jakarta");
 
 class AttendanceController extends Controller
 {
-    function getAttendances()
+    function index()
     {
-        $attendances = Attendance::where('user_id', Auth::user()->id)->get(); 
-        return response()->json([
-            'success' => true,
-            'message' => 'Successful show data',
-            'data' => $attendances
-        ]);
+        $attendances = Attendance::where('user_id', Auth::user()->id)->get();
+
+        if ($attendances->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No attendance data',
+                'data' => null
+            ]);
+        } else {
+            return response()->json([
+                'success' => true,
+                'message' => 'Attendance data found',
+                'data' => $attendances
+            ]);
+        }
     }
 
-    function saveAttendance(Request $request)
+    function create(Request $request)
     {
         $information = "";
         $attendance = Attendance::whereDate('date', '=', date('Y-m-d'))
@@ -50,7 +57,6 @@ class AttendanceController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => $information,
-                    'data' => null
                 ]);
             } else {
                 $attendance->update([

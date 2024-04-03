@@ -5,9 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Auth;
-use App\Models\Attendance;
-use Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -40,7 +39,9 @@ class AuthController extends Controller
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()
-                ->json(['message' => 'Unauthorized'], 401);
+                ->json([
+                    'message' => 'Invalid credentials'
+                ], 401);
         }
 
         $user = User::where('email', $request['email'])->firstOrFail();
@@ -57,21 +58,34 @@ class AuthController extends Controller
             ]);
     }
 
-    public function me(Request $request){  
-        return response()->json([
-            'success' => true,
-            'message' => 'User data fetched successfully', 
-            'data' => Auth::user(),
-        ]);
+    public function me()
+    {
+        $me = Auth::user();
+
+        if ($me) {
+            return response()
+                ->json([
+                    'success' => true,
+                    'message' => 'User data',
+                    'data' => $me
+                ]);
+        } else {
+            return response()
+                ->json([
+                    'success' => false,
+                    'message' => 'User not found',
+                    'data' => null
+                ]);
+        }
     }
 
     // method for user logout and delete token
-    public function logout()
+    public function logout(Request $request)
     {
-        auth()->user()->tokens()->delete();
-
-        return [
-            'message' => 'You have successfully logged out and the token was successfully deleted'
-        ];
+        $request->user()->currentAccessToken()->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Logout successfully'
+        ]);
     }
 }

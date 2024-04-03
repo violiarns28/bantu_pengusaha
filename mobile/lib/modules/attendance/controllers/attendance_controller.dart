@@ -64,7 +64,6 @@ class AttendanceController extends GetxController {
     double latitude,
     double longitude,
   ) async {
-    SaveAttendanceResponseModel saveAttendanceResponseModel;
     Map<String, String> body = {
       "latitude": latitude.toString(),
       "longitude": longitude.toString()
@@ -110,7 +109,6 @@ class AttendanceController extends GetxController {
     return 0.0;
   }
 
-  getLocation() {}
   String formatDate(DateTime date) {
     final formatter = DateFormat('dd MMMM yyyy');
     return formatter.format(date);

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\AttendanceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,18 +16,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/register', [App\Http\Controllers\API\AuthController::class, 'register']);
-Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
-Route::get('/me', [App\Http\Controllers\API\AuthController::class, 'me']);
 
-//Protecting Routes
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/profile', function (Request $request) {
-        return auth()->user();
-    });
+Route::group(
+    ['prefix' => 'auth'],
+    function () {
+        Route::post('/register', [AuthController::class, 'register']);
+        Route::post('/login', [AuthController::class, 'login']);
 
-    Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
-    Route::get('/get-attendances',  [App\Http\Controllers\API\AttendanceController::class, 'getAttendances']);
-    Route::post('/save-attendance', [App\Http\Controllers\API\AttendanceController::class, 'saveAttendance']);
-Route::get('/me', [App\Http\Controllers\API\AuthController::class, 'me']);
-});
+        Route::group(['middleware' => ['auth:sanctum']], function () {
+            Route::get('/me', [AuthController::class, 'me']);
+            Route::post('/logout', [AuthController::class, 'logout']);
+        });
+    }
+);
+
+Route::group(
+    [
+        'middleware' => ['auth:sanctum'],
+        'prefix' => 'attendance'
+    ],
+    function () {
+        Route::get('/profile', function (Request $request) {
+            return auth()->user();
+        });
+
+        Route::get('/',  [AttendanceController::class, 'index']);
+        Route::post('/', [AttendanceController::class, 'create']);
+    }
+);

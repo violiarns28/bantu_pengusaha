@@ -23,16 +23,20 @@ class AuthController extends Controller
             return response()->json($validator->errors());
         }
 
-        $user = User::create([
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
-
-        $token = $user->createToken('auth_token')->plainTextToken;
+        
+        $user = User::where('email', $request['email'])->firstOrFail();
 
         return response()
-            ->json(['data' => $user, 'access_token' => $token, 'token_type' => 'Bearer',]);
+            ->json([
+                'success' => true,
+                'message' => 'User created successfully',
+                'data' => $user, 
+            ]);
     }
 
     public function login(Request $request)

@@ -12,7 +12,6 @@ class AttendanceView extends GetView<AttendanceController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(AttendanceController());
     final Completer<GoogleMapController> gC = Completer<GoogleMapController>();
     return Scaffold(
       backgroundColor: Colors.white,
@@ -304,7 +303,7 @@ class ClockInOutButton extends StatelessWidget {
                   const Color(0xFF3559A0),
                 )
               : MaterialStateProperty.all<Color>(
-                  Color.fromARGB(255, 60, 67, 82)),
+                  const Color.fromARGB(255, 60, 67, 82)),
         ),
         child: (controller.today.value?.clockIn == null ||
                 controller.today.value?.clockOut == null)

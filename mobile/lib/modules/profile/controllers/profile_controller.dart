@@ -1,58 +1,39 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:bantu_pengusaha/core/sources/sources.dart';
+import 'package:bantu_pengusaha/core/services/local.dart';
+import 'package:bantu_pengusaha/data/models/models.dart';
+import 'package:bantu_pengusaha/data/repo/auth/auth.dart';
 import 'package:bantu_pengusaha/modules/login/views/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../data/models/home_response.dart';
-
 class ProfileController extends GetxController {
+  final AuthRepo _authRepo;
+  final LocalService _localService;
+
+  ProfileController(
+    this._authRepo,
+    this._localService,
+  );
+
   Uint8List? _image;
   File? selectedImage;
-  SharedPreferences? _prefs;
   final name = "".obs;
-  final _token = "".obs;
-  Rx<HistoryData?> today = Rx<HistoryData?>(null);
-  List<HistoryData> history = [];
-  final network = Network();
+  Rx<AttendanceModel?> today = Rx<AttendanceModel?>(null);
+  List<AttendanceModel> history = [];
 
   @override
   void onInit() {
-    initializeSP();
+    name.value = _localService.getUser()?.name ?? "Folks";
     super.onInit();
   }
 
-  void initializeSP() async {
-    _prefs ??= await SharedPreferences.getInstance();
-    final tRes = _prefs!.getString("token") ?? "";
-    _token.value = tRes;
-    final nRes = _prefs!.getString("name") ?? "";
-    name.value = nRes;
-  }
-
-  Future<void> getData() async {
-    history.clear();
-    history = await network.getAttendances();
-    final now = DateTime.now();
-    for (var element in history) {
-      if (element.date.day == now.day) {
-        today.value = element;
-      } else {
-        history.add(element);
-      }
-    }
-  }
-
   void logout() async {
-    var res = await Network().getData('/logout');
-    var body = json.decode(res.body);
-    debugPrint(res.body);
-    if (body['success']) {
+    var res = await _authRepo.logout();
+    if (res.success) {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.remove('user');
       localStorage.remove('token');

@@ -1,14 +1,13 @@
+import 'package:bantu_pengusaha/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/home_controller.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
-    final HomeController controller = Get.put(HomeController());
-
     final size = MediaQuery.of(context).size;
     final height = size.height;
     return Scaffold(
@@ -442,10 +441,10 @@ class HomeView extends StatelessWidget {
                                 fit: BoxFit.cover, // Image fit property
                               ),
                             ),
-                            child: const Row(
+                            child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
+                                const Padding(
                                   padding: EdgeInsets.fromLTRB(
                                       15, 16, 5, 0), // Padding for the icon
                                   child: Icon(
@@ -454,33 +453,8 @@ class HomeView extends StatelessWidget {
                                     size: 35,
                                   ),
                                 ),
-                                SizedBox(width: 10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top:
-                                              10), // Padding for the "Location" text
-                                      child: Text(
-                                        "Location",
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.normal,
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      "Waru, Sidoarjo",
-                                      style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                const SizedBox(width: 10),
+                                LocationContainer(controller: controller),
                               ],
                             ),
                           ),
@@ -492,6 +466,55 @@ class HomeView extends StatelessWidget {
               );
             }
           }),
+    );
+  }
+}
+
+class LocationContainer extends StatelessWidget {
+  const LocationContainer({
+    super.key,
+    required this.controller,
+  });
+
+  final HomeController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: controller.getCurrentLocation(),
+      builder: (context, snapshot) {
+        if (snapshot.data == null) {
+          return const Text("Failed to get location");
+        } else {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding:
+                    EdgeInsets.only(top: 10), // Padding for the "Location" text
+                child: Text(
+                  "Location",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.normal,
+                    color: Color(0xFFFFFFFF),
+                  ),
+                ),
+              ),
+              Text(
+                "${(snapshot.data?[0].locality ?? "Unknown")
+                        .clearLocalityPrefix()}, ${(snapshot.data?[0].subAdministrativeArea ?? "Unknown")
+                        .clearLocalityPrefix()}",
+                style: const TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          );
+        }
+      },
     );
   }
 }

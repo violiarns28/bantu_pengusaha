@@ -1,10 +1,10 @@
 class ApiResponse<T> {
-  final T data;
+  final T? data;
   final bool success;
   final String message;
 
   ApiResponse({
-    required this.data,
+    this.data,
     required this.success,
     required this.message,
   });

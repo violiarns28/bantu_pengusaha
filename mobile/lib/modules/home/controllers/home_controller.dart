@@ -1,42 +1,63 @@
-import 'package:bantu_pengusaha/core/sources/sources.dart';
+import 'package:bantu_pengusaha/core/services/services.dart';
+import 'package:bantu_pengusaha/data/models/models.dart';
+import 'package:bantu_pengusaha/data/repo/attendance/attendance.dart';
+import 'package:bantu_pengusaha/utils/logger.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../../data/models/home_response.dart';
 
 class HomeController extends GetxController {
-  SharedPreferences? _prefs;
+  final AttendanceRepo _attendanceRepo;
+  final LocalService _local;
+  final LocationService _locationService;
+
+  HomeController(this._attendanceRepo, this._local, this._locationService);
+
   final name = "".obs;
-  final _token = "".obs;
-  Rx<HistoryData?> today = Rx<HistoryData?>(null);
-  List<HistoryData> history = [];
-  final network = Network();
+  Rx<AttendanceModel?> today = Rx<AttendanceModel?>(null);
+  List<AttendanceModel> history = [];
 
   @override
   void onInit() {
-    initializeSP();
     super.onInit();
+    name.value = _local.getUser()?.name ?? "Folks";
+    getData();
   }
 
-  void initializeSP() async {
-    _prefs ??= await SharedPreferences.getInstance();
-    final tRes = _prefs!.getString("token") ?? "";
-    _token.value = tRes;
-    final nRes = _prefs!.getString("name") ?? "";
-    name.value = nRes;
+  Future<List<Placemark>?> getCurrentLocation() async {
+    final coor = await _locationService.getLocation();
+    if (coor == null) {
+      Get.snackbar("Error", "Failed to get location");
+      return null;
+    } else {
+      final pMarks = await _locationService.locationFromCoor(
+          coor.latitude ?? 0, coor.longitude ?? 0);
+      for (var i in pMarks) {
+        log.e('PLACEMARKS: $i');
+      }
+      return pMarks;
+    }
   }
 
   Future<void> getData() async {
     history.clear();
-    history = await network.getAttendances();
-    final now = DateTime.now();
-    for (var element in history) {
-      if (element.date.day == now.day) {
-        today.value = element;
-      } else {
-        history.add(element);
+    final res = await _attendanceRepo.getAll();
+
+    if (res.success && res.data != null) {
+      history = res.data ?? [];
+      final now = DateTime.now();
+      List<AttendanceModel> elementsToAdd = [];
+
+      for (var element in history) {
+        if (element.date.day == now.day) {
+          today.value = element;
+        } else {
+          elementsToAdd.add(element);
+        }
       }
+      history.addAll(elementsToAdd);
+    } else {
+      Get.snackbar("Error", res.message);
     }
   }
 

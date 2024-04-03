@@ -27,7 +27,7 @@ class AttendanceController extends Controller
                 'success' => true,
                 'message' => 'Attendance data found',
                 'data' => $attendances
-            ]);
+            ], 200, [], JSON_NUMERIC_CHECK);
         }
     }
 
@@ -49,8 +49,9 @@ class AttendanceController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Clock in successful',
-                'data' => $attendance
-            ]);
+                'data' =>
+                $attendance
+            ], 200, [], JSON_NUMERIC_CHECK);
         } else {
             if ($attendance->clock_out !== null) {
                 $information = "You've already presence today";
@@ -69,8 +70,9 @@ class AttendanceController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Clock out successful',
-                'data' => $attendance
-            ]);
+                'data' =>
+                $attendance
+            ], 200, [], JSON_NUMERIC_CHECK);
         }
     }
 }

@@ -1,27 +1,26 @@
-import 'dart:convert';
-
-import 'package:bantu_pengusaha/core/sources/sources.dart';
-import 'package:bantu_pengusaha/modules/modules.dart';
+import 'package:bantu_pengusaha/core/routes/app_pages.dart';
+import 'package:bantu_pengusaha/data/repo/auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
   late TextEditingController email;
   late TextEditingController password;
-  final net = Network();
+  final AuthRepo _authRepo;
+
+  LoginController(this._authRepo);
 
   @override
   void onInit() async {
     email = TextEditingController();
     password = TextEditingController();
-    final me = await net.getMe();
-    if (me) {
-      Get.to(() => const BottomNavBarView());
+    final me = await _authRepo.me();
+    if (me.success) {
+      Get.toNamed(Routes.BOTTOM_NAV_BAR);
     }
 
-    // email.text = 'a@a.com';
-    // password.text = 'password';
+    email.text = 'a@a.com';
+    password.text = 'password';
     super.onInit();
   }
 
@@ -33,17 +32,11 @@ class LoginController extends GetxController {
   }
 
   void login(String email, String password) async {
-    var data = {'email': email, 'password': password};
-    var res = await Network().postData('/login', data);
-    debugPrint('RES : $res');
-    var body = json.decode(res.body);
-    debugPrint(res.body);
-
-    if (body != null && body['success'] != null && body['success']) {
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      localStorage.setString('token', body['data']['token']);
-      localStorage.setString('name', body['data']['name']);
-      Get.to(() => const BottomNavBarView());
+    final res = await _authRepo.login(email, password);
+    if (res.success) {
+      Get.toNamed(Routes.BOTTOM_NAV_BAR);
+    } else {
+      Get.snackbar('Error', res.message);
     }
   }
 }

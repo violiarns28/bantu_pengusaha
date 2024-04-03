@@ -16,22 +16,7 @@ class AttendanceController extends Controller
 {
     function getAttendances()
     {
-        $attendances = Attendance::where('user_id', Auth::user()->id)->get();
-        // foreach ($attendances as $item) {
-        //     if ($item->date == date('Y-m-d')) {
-        //         $item->is_today = true;
-        //     } else {
-        //         $item->is_today = false;
-        //     }
-        //     $datetime = Carbon::parse($item->date)->locale('id');
-        //     $clock_in = Carbon::parse($item->clock_in)->locale('id');
-        //     $clock_out = Carbon::parse($item->clock_out)->locale('id');
-
-        //     $item->date = $datetime->format('H:i');
-        //     $item->clock_in = $clock_in->format('H:i');
-        //     $item->clock_out = $clock_out->format('H:i');
-        // }
-
+        $attendances = Attendance::where('user_id', Auth::user()->id)->get(); 
         return response()->json([
             'success' => true,
             'message' => 'Successful show data',

@@ -21,8 +21,8 @@ class LoginController extends GetxController {
       Get.to(() => const BottomNavBarView());
     }
 
-    email.text = 'a@a.com';
-    password.text = 'password';
+    // email.text = 'a@a.com';
+    // password.text = 'password';
     super.onInit();
   }
 

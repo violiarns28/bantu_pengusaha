@@ -25,12 +25,12 @@ class HomeView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(200, 50, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(170, 50, 0, 0),
                       child: Text(
                         controller.formatDate(DateTime.now()),
                         style: TextStyle(
                           fontSize: 16.0,
-                          fontWeight: FontWeight.normal,
+                          fontWeight: FontWeight.w500,
                           color: const Color(0xFF000000).withOpacity(0.7),
                         ),
                       ),
@@ -68,39 +68,11 @@ class HomeView extends StatelessWidget {
                                     controller.name.value,
                                     style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w500,
                                       color: const Color(0xFF000000)
                                           .withOpacity(0.7),
                                     ),
                                   ),
-                                  // FutureBuilder(
-                                  //     future: controller.name,
-                                  //     builder: (BuildContext context,
-                                  //         AsyncSnapshot<String> snapshot) {
-                                  //       if (snapshot.connectionState ==
-                                  //           ConnectionState.waiting) {
-                                  //         return CircularProgressIndicator();
-                                  //       } else {
-                                  //         if (snapshot.hasData) {
-                                  //           // print(snapshot.data);
-                                  //           return Text(snapshot.data!,
-                                  //               style: TextStyle(
-                                  //                 fontSize: 16.0,
-                                  //                 fontWeight: FontWeight.normal,
-                                  //                 color: Color(0xFF000000)
-                                  //                     .withOpacity(0.7),
-                                  //               ));
-                                  //         } else {
-                                  //           return Text("-",
-                                  //               style: TextStyle(
-                                  //                 fontSize: 16.0,
-                                  //                 fontWeight: FontWeight.normal,
-                                  //                 color: Color(0xFF000000)
-                                  //                     .withOpacity(0.7),
-                                  //               ));
-                                  //         }
-                                  //       }
-                                  //     }),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 4),
                                     child: Text(

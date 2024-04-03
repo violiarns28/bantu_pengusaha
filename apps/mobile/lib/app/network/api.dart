@@ -6,11 +6,26 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Network {
-  final String _url = 'https://c24e-114-10-31-57.ngrok-free.app/api';
+  final String _url = 'http://192.168.1.56:3000/api';
 
   Future<String?> _getToken() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     return localStorage.getString('token');
+  }
+
+  Future<Map<String, String>> _setHeaders() async {
+    final t = await _getToken();
+    return {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $t',
+    };
+  }
+
+  Future<bool> getMe() async {
+    final res = await getData('/me');
+    final body = json.decode(res.body);
+    return body['success'] ?? false; // Add null check and default value
   }
 
   getData(apiURL) async {
@@ -31,25 +46,8 @@ class Network {
     );
   }
 
-  Future<Map<String, String>> _setHeaders() async {
-    final t = await _getToken();
-    return {
-      'Content-type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $t',
-    };
-  }
-
-  Future<bool> getMe() async {
-    final res = await getData('/me');
-    final body = json.decode(res.body);
-    return body['success'];
-  }
-
   Future<List<HistoryData>> getAttendance() async {
     final response = await getData('/get-attendances');
-    // log.f("d: ${response.body}");
-
     final homeResponseModel =
         HomeResponseModel.fromJson(json.decode(response.body));
 

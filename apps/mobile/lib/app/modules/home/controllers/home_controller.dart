@@ -46,7 +46,7 @@ class HomeController extends GetxController {
   }
 
   String formatDate(DateTime date) {
-    final formatter = DateFormat('dd MMMM yyyy');
+    final formatter = DateFormat('EEEE, dd MMMM yyyy');
     return formatter.format(date);
   }
 

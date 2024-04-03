@@ -1,9 +1,6 @@
-import 'dart:async';
 import 'dart:convert';
+import 'dart:math' show cos, sqrt, asin;
 
-import 'package:bantu_pengusaha/app/modules/home/controllers/home_controller.dart';
-import 'package:bantu_pengusaha/app/network/api.dart';
-import 'package:bantu_pengusaha/data/models/home_response.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as myHttp;
@@ -12,7 +9,10 @@ import 'package:location/location.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../data/models/home_response.dart';
 import '../../../../data/models/save_attendance.dart';
+import '../../../network/api.dart';
+import '../../home/controllers/home_controller.dart';
 
 class AttendanceController extends GetxController {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -57,13 +57,15 @@ class AttendanceController extends GetxController {
         return null;
       }
     }
-
     return await location.getLocation();
   }
 
   Future<void> saveAttendance(
-      BuildContext context, double latitude, double longitude) async {
-    SaveAttendanceResponseModel res;
+    BuildContext context,
+    double latitude,
+    double longitude,
+  ) async {
+    SaveAttendanceResponseModel saveAttendanceResponseModel;
     Map<String, String> body = {
       "latitude": latitude.toString(),
       "longitude": longitude.toString()
@@ -74,12 +76,12 @@ class AttendanceController extends GetxController {
     Map<String, String> headers = {'Authorization': 'Bearer $token'};
 
     var response = await myHttp.post(
-      Uri.parse("https://c24e-114-10-31-57.ngrok-free.app/api/save-attendance"),
+      Uri.parse("http://192.168.1.56:3000/api/save-attendance"),
       body: body,
       headers: headers,
     );
 
-    res = SaveAttendanceResponseModel.fromJson(json.decode(response.body));
+    var res = SaveAttendanceResponseModel.fromJson(json.decode(response.body));
 
     if (res.success) {
       // showToast('Clock in successful');
@@ -92,7 +94,6 @@ class AttendanceController extends GetxController {
       final hC = Get.find<HomeController>();
       hC.today.value = res.data;
     } else {
-      // showToast('Clock in unsuccessful');
       if (today.value?.clockIn == null) {
         showToast('Clock in unsuccessful');
       } else {
@@ -101,8 +102,15 @@ class AttendanceController extends GetxController {
     }
   }
 
-  getLocation() {}
+  double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+    const p = 0.017453292519943295;
+    var a = 0.5 -
+        cos((lat2 - lat1) * p) / 2 +
+        cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
+    return 12742 * asin(sqrt(a)); // 2 * R; R = 6371 km
+  }
 
+  getLocation() {}
   String formatDate(DateTime date) {
     final formatter = DateFormat('dd MMMM yyyy');
     return formatter.format(date);

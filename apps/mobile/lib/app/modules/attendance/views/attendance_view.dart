@@ -46,44 +46,20 @@ class AttendanceView extends GetView<AttendanceController> {
               Expanded(
                 child: Stack(
                   children: [
-                    // SizedBox(
-                    //   height: 377,
-                    //   child: SfMaps(
-                    //     layers: [
-                    //       MapTileLayer(
-                    //         initialFocalLatLng: MapLatLng(
-                    //           currentLocation.latitude!,
-                    //           currentLocation.longitude!,
-                    //         ),
-                    //         initialZoomLevel: 15,
-                    //         initialMarkersCount: 1,
-                    //         urlTemplate:
-                    //             "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                    //         markerBuilder: (BuildContext context, int index) {
-                    //           return MapMarker(
-                    //             latitude: currentLocation.latitude!,
-                    //             longitude: currentLocation.longitude!,
-                    //             child: const Icon(
-                    //               Icons.location_on,
-                    //               color: Colors.red,
-                    //             ),
-                    //           );
-                    //         },
-                    //       )
-                    //     ],
-                    //   ),
-                    // ),
                     SizedBox(
                       height: 377,
                       child: GoogleMap(
                         mapType: MapType.normal,
+                        myLocationEnabled: true,
+                        onCameraMove: null,
+                        myLocationButtonEnabled: true,
                         initialCameraPosition: kGooglePlex,
                         onMapCreated: (GoogleMapController controller) {
                           gC.complete(controller);
                         },
                         markers: {
                           Marker(
-                            markerId: MarkerId('currentLocation'),
+                            markerId: const MarkerId('currentLocation'),
                             position: LatLng(
                               currentLocation.latitude!,
                               currentLocation.longitude!,
@@ -92,15 +68,15 @@ class AttendanceView extends GetView<AttendanceController> {
                         },
                         circles: {
                           Circle(
-                            circleId: CircleId('currentLocation'),
-                            center: LatLng(
-                              0.0000,
-                              0.0000,
+                            circleId: const CircleId('currentLocation'),
+                            center: const LatLng(
+                              -7.3585689,
+                              112.7413656,
                             ),
                             // 10 meters radius
                             radius: 10,
                             fillColor: Colors.blue.withOpacity(0.5),
-                            strokeWidth: 0,
+                            strokeWidth: 1,
                           ),
                         },
                       ),
@@ -271,6 +247,7 @@ class AttendanceView extends GetView<AttendanceController> {
   }
 }
 
+// class ClockInOutButton extends StatelessWidget {
 class ClockInOutButton extends StatelessWidget {
   const ClockInOutButton({
     super.key,
@@ -283,43 +260,67 @@ class ClockInOutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return ElevatedButton(
-        onPressed: () {
+    return ElevatedButton(
+      onPressed: () async {
+        double distance = controller.calculateDistance(
+          currentLocation.latitude!,
+          currentLocation.longitude!,
+          -7.3585689,
+          112.7413656,
+        );
+        if (distance <= 10) {
           controller.saveAttendance(
             context,
             currentLocation.latitude!,
             currentLocation.longitude!,
           );
-        },
-        style: ButtonStyle(
-          backgroundColor: (controller.today.value?.clockIn == null ||
-                  controller.today.value?.clockOut == null)
-              ? MaterialStateProperty.all<Color>(
-                  const Color(0xFF3559A0),
-                )
-              : MaterialStateProperty.all<Color>(
-                  Color.fromARGB(255, 69, 72, 80)),
+        } else {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Error'),
+                content: const Text(
+                  'You are more than 10 meters away from the office.',
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      },
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(
+          const Color(0xFF3559A0),
         ),
-        child: (controller.today.value?.clockIn == null ||
+      ),
+      child: Obx(() {
+        return (controller.today.value?.clockIn == null ||
                 controller.today.value?.clockOut == null)
             ? Text(
                 controller.today.value == null ? "Clock In" : "Clock Out",
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18.0,
                   fontWeight: FontWeight.w500,
                 ),
               )
-            : Text(
-                'Already Clocked In/Out',
+            : const Text(
+                'Already Presence',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 18.0,
                   fontWeight: FontWeight.w500,
                 ),
-              ),
-      );
-    });
+              );
+      }),
+    );
   }
 }

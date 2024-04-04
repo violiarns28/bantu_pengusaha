@@ -1,0 +1,191 @@
+{
+	"info": {
+		"_postman_id": "a79aabf5-3d7a-4acd-b43d-78f0eeb2b5d3",
+		"name": "Bantu Pengusaha API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21874629",
+		"_collection_link": "https://planetary-crater-665941.postman.co/workspace/a~99306df1-bc84-4717-8f60-78e5e82c189f/collection/21874629-a79aabf5-3d7a-4acd-b43d-78f0eeb2b5d3?action=share&source=collection_link&creator=21874629"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"a@a.com\",\r\n    \"password\" : \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DEV_BASE_URL}}/auth/login",
+							"host": [
+								"{{DEV_BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"John\",\r\n    \"email\" : \"a@b.com\",\r\n    \"password\" : \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DEV_BASE_URL}}/auth/register",
+							"host": [
+								"{{DEV_BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Me",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DEV_BASE_URL}}/auth/me",
+							"host": [
+								"{{DEV_BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Attendance",
+			"item": [
+				{
+					"name": "Get data by Token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DEV_BASE_URL}}/attendance",
+							"host": [
+								"{{DEV_BASE_URL}}"
+							],
+							"path": [
+								"attendance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save data by Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"latitude\" : 0.0,\r\n    \"longitude\" : 0.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DEV_BASE_URL}}/attendance",
+							"host": [
+								"{{DEV_BASE_URL}}"
+							],
+							"path": [
+								"attendance"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ping",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000"
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "104|8oHYf3HhUzPfmnBfHGa7t5gzrcIijejmB2q62Rdq",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "DEV_BASE_URL",
+			"value": "http://localhost:3000/api",
+			"type": "string"
+		}
+	]
+}

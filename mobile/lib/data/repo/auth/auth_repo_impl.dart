@@ -3,6 +3,7 @@ import 'package:bantu_pengusaha/core/services/local.dart';
 import 'package:bantu_pengusaha/data/models/api_response.dart';
 import 'package:bantu_pengusaha/data/models/user.dart';
 import 'package:bantu_pengusaha/data/repo/auth/auth.dart';
+import 'package:bantu_pengusaha/utils/logger.dart';
 import 'package:get/get_connect/connect.dart';
 
 class AuthRepoImpl extends GetConnect implements AuthRepo {
@@ -11,13 +12,16 @@ class AuthRepoImpl extends GetConnect implements AuthRepo {
   AuthRepoImpl(this._local);
 
   static decoder(data) {
-    if (data['data'] == null) {
+    log.e('Data: $data');
+
+    if (data['data'] == null || data['success'] == false) {
       return data;
     }
     data['data'] = UserModel.fromJson(data['data']);
     return data;
   }
 
+// tadi mau ketik email tbtb gitu, blm aku pencet login
   @override
   Future<ApiResponse<UserModel>> login(
     String email,
@@ -30,8 +34,10 @@ class AuthRepoImpl extends GetConnect implements AuthRepo {
       decoder: decoder,
     );
 
-    await _local.setUser(res.body['data']);
-    await _local.setToken(res.body['data'].token);
+    if (res.body['data'] != null) {
+      await _local.setUser(res.body['data']);
+      await _local.setToken(res.body['data'].token);
+    }
 
     return ApiResponse<UserModel>.fromJson(res.body);
   }
@@ -60,6 +66,8 @@ class AuthRepoImpl extends GetConnect implements AuthRepo {
       decoder: decoder,
     );
 
+    log.f('AuthRepo.me ${res.body}\n${ListApi.authMe}');
+
     return ApiResponse<UserModel>.fromJson(res.body);
   }
 
@@ -71,6 +79,7 @@ class AuthRepoImpl extends GetConnect implements AuthRepo {
       decoder: decoder,
     );
     await _local.removeToken();
+    await _local.removeUser();
     return ApiResponse.fromJson(res.body);
   }
 }

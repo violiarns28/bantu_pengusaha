@@ -483,6 +483,11 @@ class LocationContainer extends StatelessWidget {
     return FutureBuilder(
       future: controller.getCurrentLocation(),
       builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
         if (snapshot.data == null) {
           return const Text("Failed to get location");
         } else {
@@ -502,9 +507,7 @@ class LocationContainer extends StatelessWidget {
                 ),
               ),
               Text(
-                "${(snapshot.data?[0].locality ?? "Unknown")
-                        .clearLocalityPrefix()}, ${(snapshot.data?[0].subAdministrativeArea ?? "Unknown")
-                        .clearLocalityPrefix()}",
+                "${(snapshot.data?[0].locality ?? "Unknown").clearLocalityPrefix()}, ${(snapshot.data?[0].subAdministrativeArea ?? "Unknown").clearLocalityPrefix()}",
                 style: const TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.w600,

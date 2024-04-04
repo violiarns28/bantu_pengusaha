@@ -46,3 +46,4 @@ class AttendanceModel {
         "updated_at": updatedAt.toIso8601String(),
       };
 }
+

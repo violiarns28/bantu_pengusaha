@@ -1,4 +1,3 @@
-import 'package:bantu_pengusaha/core/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -53,7 +52,8 @@ class ProfileView extends GetView<ProfileController> {
                   const SizedBox(height: 24),
                   InkWell(
                     onTap: () {
-                      Get.toNamed(Routes.LOGIN);
+                      // Get.toNamed(Routes.LOGIN);
+                      controller.logout();
                     },
                     child: Container(
                       width: double.infinity,

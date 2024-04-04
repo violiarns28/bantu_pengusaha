@@ -24,27 +24,34 @@ class LocationService extends GetxService {
   }
 
   Future<LocationData?> getLocation() async {
-    bool serviceEnabled = await location.serviceEnabled();
-    if (!serviceEnabled) {
-      serviceEnabled = await location.requestService();
-      if (!serviceEnabled) {
-        return null;
-      }
+    bool isOk = await requestPermission();
+    if (isOk) {
+      return await location.getLocation();
+    } else {
+      return Future.value(null);
     }
-
-    PermissionStatus permissionGranted = await location.hasPermission();
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await location.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
-        return null;
-      }
-    }
-
-    return await location.getLocation();
   }
 
   Future<List<Placemark>> locationFromCoor(
       double latitude, double longitude) async {
     return await placemarkFromCoordinates(latitude, longitude);
+  }
+
+  Future<bool> requestPermission() async {
+    bool serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+    }
+
+    PermissionStatus permissionGranted = await location.hasPermission();
+
+    if (permissionGranted == PermissionStatus.granted) {
+      return true;
+    } else if (permissionGranted == PermissionStatus.grantedLimited) {
+      return true;
+    } else {
+      permissionGranted = await location.requestPermission();
+      return false;
+    }
   }
 }

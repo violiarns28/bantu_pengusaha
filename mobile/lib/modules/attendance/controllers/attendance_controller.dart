@@ -4,6 +4,7 @@ import 'package:bantu_pengusaha/core/services/location.dart';
 import 'package:bantu_pengusaha/data/models/models.dart';
 import 'package:bantu_pengusaha/data/repo/repo.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
@@ -17,6 +18,9 @@ class AttendanceController extends GetxController {
   AttendanceController(this._attendanceRepo, this._locationService);
 
   final Rx<AttendanceModel?> today = Rx<AttendanceModel?>(null);
+
+  final Rx<LocationData?> loc = Rx<LocationData?>(null);
+  final Rx<List<Placemark>?> pMark = Rx<List<Placemark>?>(null);
 
   @override
   void onInit() {
@@ -39,7 +43,17 @@ class AttendanceController extends GetxController {
   }
 
   Future<LocationData?> getCurrentLocation() async {
-    return await _locationService.getLocation();
+    loc.value = await _locationService.getLocation();
+    return Future.value(loc.value);
+  }
+
+  Future<Placemark?> toPlacemark({
+    double? ltt,
+    double? lnt,
+  }) async {
+    pMark.value =
+        await _locationService.locationFromCoor(ltt ?? 0.0, lnt ?? 0.0);
+    return pMark.value?.last;
   }
 
   Future<void> saveAttendance(

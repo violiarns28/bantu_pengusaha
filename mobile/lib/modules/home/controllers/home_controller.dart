@@ -1,6 +1,7 @@
 import 'package:bantu_pengusaha/core/services/services.dart';
 import 'package:bantu_pengusaha/data/models/models.dart';
 import 'package:bantu_pengusaha/data/repo/attendance/attendance.dart';
+import 'package:bantu_pengusaha/modules/attendance/attendance.dart';
 import 'package:bantu_pengusaha/utils/logger.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
@@ -20,12 +21,19 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    _locationService.requestPermission();
     name.value = _local.getUser()?.name ?? "Folks";
     getData();
   }
 
   Future<List<Placemark>?> getCurrentLocation() async {
-    final coor = await _locationService.getLocation();
+    final aC = Get.find<AttendanceController>();
+
+    final coor = await Future.delayed(const Duration(seconds: 1), () {
+      return aC.loc.value;
+    });
+
+    // final coor = await _locationService.getLocation();
     if (coor == null) {
       Get.snackbar("Error", "Failed to get location");
       return null;
@@ -72,3 +80,4 @@ class HomeController extends GetxController {
     return "${split[0]}:${split[1]}";
   }
 }
+ 

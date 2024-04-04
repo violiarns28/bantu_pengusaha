@@ -64,9 +64,7 @@ class AttendanceController extends Controller
                     'clock_out' => date('H:i:s')
                 ]);
             }
-            $attendance = Attendance::whereDate('date', '=', date('Y-m-d'))
-                ->first();
-
+            $attendance = Attendance::whereDate('date', '=', date('Y-m-d'))->where('user_id', Auth::user()->id)->first();
             return response()->json([
                 'success' => true,
                 'message' => 'Clock out successful',

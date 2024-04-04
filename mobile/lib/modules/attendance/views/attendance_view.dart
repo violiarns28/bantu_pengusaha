@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bantu_pengusaha/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -33,7 +34,6 @@ class AttendanceView extends GetView<AttendanceController> {
           }
 
           final LocationData currentLocation = snapshot.data!;
-
           CameraPosition kGooglePlex = CameraPosition(
             target: LatLng(
                 currentLocation.latitude ?? 0, currentLocation.longitude ?? 0),
@@ -182,15 +182,15 @@ class AttendanceView extends GetView<AttendanceController> {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          child: const Row(
+                          child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               // Removed the Icon widget here
-                              SizedBox(width: 16),
+                              const SizedBox(width: 16),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Padding(
+                                  const Padding(
                                     padding: EdgeInsets.only(top: 10),
                                     child: Text(
                                       "Location",
@@ -201,14 +201,9 @@ class AttendanceView extends GetView<AttendanceController> {
                                       ),
                                     ),
                                   ),
-                                  Text(
-                                    "Delta Pelangi 3 No 29, Deltasari, Waru",
-                                    style: TextStyle(
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xFFFFFFFF),
-                                    ),
-                                  ),
+                                  CurrentLocation(
+                                      controller: controller,
+                                      currentLocation: currentLocation),
                                 ],
                               ),
                             ],
@@ -243,6 +238,34 @@ class AttendanceView extends GetView<AttendanceController> {
         },
       ),
     );
+  }
+}
+
+class CurrentLocation extends StatelessWidget {
+  const CurrentLocation({
+    super.key,
+    required this.controller,
+    required this.currentLocation,
+  });
+
+  final AttendanceController controller;
+  final LocationData currentLocation;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: controller.toPlacemark(
+            ltt: currentLocation.latitude, lnt: currentLocation.longitude),
+        builder: (context, snapshot) {
+          return Text(
+            "${(snapshot.data?.locality ?? "Unknown").clearLocalityPrefix()}, ${(snapshot.data?.subAdministrativeArea ?? "Unknown").clearLocalityPrefix()}",
+            style: const TextStyle(
+              fontSize: 14.0,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFFFFFFFF),
+            ),
+          );
+        });
   }
 }
 

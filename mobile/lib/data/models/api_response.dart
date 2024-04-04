@@ -8,7 +8,7 @@ class ApiResponse<T> {
     required this.success,
     required this.message,
   });
-
+                  
   factory ApiResponse.fromJson(Map<String, dynamic> json) {
     return ApiResponse(
       data: json['data'],

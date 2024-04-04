@@ -1,14 +1,15 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:bantu_pengusaha/core/services/local.dart';
+import 'package:bantu_pengusaha/core/routes/routes.dart';
+import 'package:bantu_pengusaha/core/services/services.dart';
 import 'package:bantu_pengusaha/data/models/models.dart';
 import 'package:bantu_pengusaha/data/repo/auth/auth.dart';
-import 'package:bantu_pengusaha/modules/login/views/login_view.dart';
+import 'package:bantu_pengusaha/data/repo/repo.dart';
+import 'package:bantu_pengusaha/modules/modules.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileController extends GetxController {
   final AuthRepo _authRepo;
@@ -34,10 +35,13 @@ class ProfileController extends GetxController {
   void logout() async {
     var res = await _authRepo.logout();
     if (res.success) {
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      localStorage.remove('user');
-      localStorage.remove('token');
-      Get.offAll(() => const LoginView());
+      Get.lazyPut<LoginController>(
+        () => LoginController(
+          Get.find<AuthRepoImpl>(),
+          Get.find<LocationService>(),
+        ),
+      );
+      Get.offAllNamed(Routes.LOGIN);
     }
   }
 

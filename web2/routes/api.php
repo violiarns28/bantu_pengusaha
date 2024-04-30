@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\AttendanceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+Route::group(
+    ['prefix' => 'auth'],
+    function () {
+        Route::post('/register', [AuthController::class, 'register']);
+        Route::post('/login', [AuthController::class, 'login']);
+
+        Route::group(['middleware' => ['auth:sanctum']], function () {
+            Route::get('/me', [AuthController::class, 'me']);
+            Route::get('/logout', [AuthController::class, 'logout']);
+        });
+    }
+);
+
+Route::group(
+    [
+        'middleware' => ['auth:sanctum'],
+        'prefix' => 'attendance'
+    ],
+    function () {
+        Route::get('/profile', function (Request $request) {
+            return auth()->user();
+        });
+
+        Route::get('/',  [AttendanceController::class, 'index']);
+        Route::post('/', [AttendanceController::class, 'create']);
+    }
+);

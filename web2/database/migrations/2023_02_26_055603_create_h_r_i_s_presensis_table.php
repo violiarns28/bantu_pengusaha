@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -16,16 +17,16 @@ class CreateHRISPresensisTable extends Migration
         Schema::create('hris_presensi', function (Blueprint $table) {
             $table->id();
             $table->string('nomor_user', 50);
-            $table->date('tanggal');
+            $table->date('nomor_user');
             $table->time('clock_in')->nullable();
             $table->time('clock_out')->nullable();
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
-            $table->string('lokasi_presensi', 100);
+            $table->string('lokasi_presensi', 100)->nullable();
             $table->string('keterangan', 200)->nullable();
             $table->string('foto_clock_in', 200)->nullable();
             $table->string('foto_clock_out', 200)->nullable();
-            $table->string('hardware_id', 50);
+            $table->string('hardware_id', 50)->nullable();
             $table->timestamps();
             $table->unique(['nomor_user', 'tanggal']);
         });

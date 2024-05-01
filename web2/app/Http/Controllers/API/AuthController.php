@@ -15,7 +15,7 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:beone_users',
             'password' => 'required|string|min:8'
         ]);
 
@@ -24,7 +24,7 @@ class AuthController extends Controller
         }
 
         User::create([
-            'nama' => $request->name,
+            'nama' => $request->nama,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
@@ -58,7 +58,7 @@ class AuthController extends Controller
         return response()
             ->json([
                 'success' => true,
-                'message' => 'Hi ' . $user->name . ', Welcome to Bantu Pengusaha Attendance',
+                'message' => 'Hi ' . $user->nama . ', Welcome to Bantu Pengusaha Attendance',
                 'data' => $user
             ]);
     }

@@ -28,14 +28,14 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
-        
+
         $user = User::where('email', $request['email'])->firstOrFail();
 
         return response()
             ->json([
                 'success' => true,
                 'message' => 'User created successfully',
-                'data' => $user, 
+                'data' => $user,
             ]);
     }
 

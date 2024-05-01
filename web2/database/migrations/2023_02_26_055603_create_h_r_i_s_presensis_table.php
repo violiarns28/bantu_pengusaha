@@ -17,7 +17,7 @@ class CreateHRISPresensisTable extends Migration
         Schema::create('hris_presensi', function (Blueprint $table) {
             $table->id();
             $table->string('nomor_user', 50);
-            $table->date('nomor_user');
+            $table->date('tanggal');
             $table->time('clock_in')->nullable();
             $table->time('clock_out')->nullable();
             $table->decimal('latitude', 10, 7);

@@ -26,4 +26,11 @@ class Attendance extends Model
         'clock_out',
         'created_at'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
 }

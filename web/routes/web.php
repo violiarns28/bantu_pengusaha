@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -16,13 +17,19 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::redirect('/', '/home');
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/user', [UserController::class, 'index'])->name('user');
-Route::get('/create-user', [UserController::class, 'create'])->name('user');
-Route::post('/store-user', [UserController::class, 'store'])->name('user-store');
+
+// Route::group(['prefix' => 'user'], function () {
+//     Route::get('/', [UserController::class, 'index'])->name('user');
+//     Route::get('/create', [UserController::class, 'create'])->name('user-create');
+//     Route::post('/store', [UserController::class, 'store'])->name('user-store');
+// });
+
+Route::resource('user', UserController::class);
+
+Route::group(['prefix' => 'report'], function () {
+    Route::get('/', [ReportController::class, 'index'])->name('report');
+});

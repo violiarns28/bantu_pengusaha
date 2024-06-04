@@ -44,10 +44,16 @@ class AttendanceRepoImpl extends GetConnect implements AttendanceRepo {
     double latitude,
     double longitude,
   ) async {
+    final mac = await _local.getDeviceId() ?? 'unknown';
+
     final res = await post(
       ListApi.attendance,
       headers: _local.setHeaders(),
-      {'latitude': latitude, 'longitude': longitude},
+      {
+        'latitude': latitude,
+        'longitude': longitude,
+        'mac_address': mac,
+      },
       decoder: decoder,
     );
 

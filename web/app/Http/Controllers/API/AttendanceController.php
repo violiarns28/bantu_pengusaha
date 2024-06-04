@@ -33,13 +33,20 @@ class AttendanceController extends Controller
 
     function create(Request $request)
     {
-        $information = "";
+        $user = Auth::user();
+        if ($user->mac_address !== $request->mac_address) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized device',
+            ]);
+        }
+
         $attendance = Attendance::whereDate('date', '=', date('Y-m-d'))
-            ->where('user_id', Auth::user()->id)
+            ->where('user_id', $user->id)
             ->first();
         if ($attendance == null) {
             $attendance = Attendance::create([
-                'user_id' => Auth::user()->id,
+                'user_id' => $user->id,
                 'latitude' => $request->latitude,
                 'longitude' => $request->longitude,
                 'date' => date('Y-m-d'),
@@ -54,17 +61,16 @@ class AttendanceController extends Controller
             ], 200, [], JSON_NUMERIC_CHECK);
         } else {
             if ($attendance->clock_out !== null) {
-                $information = "You've already presence today";
                 return response()->json([
                     'success' => false,
-                    'message' => $information,
+                    'message' => "You've already presence today",
                 ]);
             } else {
                 $attendance->update([
                     'clock_out' => date('H:i:s')
                 ]);
             }
-            $attendance = Attendance::whereDate('date', '=', date('Y-m-d'))->where('user_id', Auth::user()->id)->first();
+            $attendance = Attendance::whereDate('date', '=', date('Y-m-d'))->where('user_id', $user->id)->first();
             return response()->json([
                 'success' => true,
                 'message' => 'Clock out successful',

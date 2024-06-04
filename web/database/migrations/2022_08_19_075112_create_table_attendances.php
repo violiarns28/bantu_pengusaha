@@ -15,7 +15,7 @@ class CreateTableAttendances extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->decimal('latitude', 12, 5);
             $table->decimal('longitude', 12, 5);
             $table->datetime('date');

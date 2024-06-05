@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class User2Controller extends Controller
 {
     public function __construct()
     {
@@ -49,12 +49,12 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'mac_address' => $request->mac_address,
-            'is_active' => $request->is_active,
             'password' => Hash::make($request->password),
         ]);
 
 
-        return redirect()->route('user.index');
+        // return redirect()->route('user');
+        return redirect()->action('App\Http\Controllers\User2Controller@index');
     }
 
     /**
@@ -93,11 +93,10 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'mac_address' => $request->mac_address,
-            'is_active' => isset($request->is_active) ? 1 : 0,
-            'password' => isset($request->password) ? Hash::make($request->password) : $user->password,
+            'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('user.index');
+        return redirect()->route('user');
     }
 
     /**
@@ -109,6 +108,6 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         User::destroy($user->id);
-        return redirect()->route('user.index');
+        return redirect()->route('user');
     }
 }

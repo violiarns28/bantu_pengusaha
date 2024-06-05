@@ -12,20 +12,20 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Time</th>
-                                    <th>Clock In</th>
-                                    <th>Clock Out</th>
-                                    <th>Location (Latitude, Longitude)</th>
+                                    <th>Total Hours</th>
+                                    <th>Total Overtime</th>
+                                    <th>Total Day</th>
+                                    <th>Total Day Off</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($attendances as $item)
+                                @foreach ($users as $item)
                                     <tr>
                                         <td>{{ $item->name }}</td>
-                                        <td>{{ $item->date }}</td>
-                                        <td>{{ $item->clock_in }}</td>
-                                        <td>{{ $item->clock_out }}</td>
-                                        <td>{{ $item->latitude }}, {{ $item->longitude }}</td>
+                                        <td>{{ $item->totalHours }}</td>
+                                        <td>{{ $item->totalOvertime }}</td>
+                                        <td>{{ $item->totalDay }}</td>
+                                        <td>{{ $item->totalDayOff }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

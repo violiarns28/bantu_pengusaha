@@ -2,14 +2,17 @@ import 'dart:convert';
 
 import 'package:bantu_pengusaha/data/models/models.dart';
 import 'package:bantu_pengusaha/utils/logger.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalService extends GetxService {
   late SharedPreferences local;
+  late DeviceInfoPlugin deviceInfo;
 
   Future<LocalService> init() async {
     local = await SharedPreferences.getInstance();
+    deviceInfo = DeviceInfoPlugin();
     return this;
   }
 
@@ -60,5 +63,13 @@ class LocalService extends GetxService {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
+  }
+
+  Future<String?> getDeviceId() async {
+    final info = await deviceInfo.deviceInfo;
+    if (info is AndroidDeviceInfo) {
+      return info.id;
+    }
+    return null;
   }
 }

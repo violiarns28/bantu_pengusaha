@@ -7,6 +7,7 @@ import 'package:bantu_pengusaha/data/models/models.dart';
 import 'package:bantu_pengusaha/data/repo/auth/auth.dart';
 import 'package:bantu_pengusaha/data/repo/repo.dart';
 import 'package:bantu_pengusaha/modules/modules.dart';
+import 'package:bantu_pengusaha/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,12 +24,16 @@ class ProfileController extends GetxController {
   Uint8List? _image;
   File? selectedImage;
   final name = "".obs;
+  final deviceId = "".obs;
   Rx<AttendanceModel?> today = Rx<AttendanceModel?>(null);
   List<AttendanceModel> history = [];
 
   @override
-  void onInit() {
+  void onInit() async {
     name.value = _localService.getUser()?.name ?? "Folks";
+    final id = await _localService.getDeviceId();
+    log.e("Mac Address: $id");
+    deviceId.value = id ?? "Unknown";
     super.onInit();
   }
 

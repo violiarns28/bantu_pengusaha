@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../controllers/profile_controller.dart';
@@ -109,6 +110,37 @@ class ProfileView extends GetView<ProfileController> {
             ),
           ),
         ),
+        Obx(
+          () => Positioned(
+            bottom: 100,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  controller.deviceId.value,
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.grey[600],
+                  ),
+                ),
+                IconButton(
+                  onPressed: () async {
+                    await Clipboard.setData(
+                        ClipboardData(text: controller.deviceId.value));
+                  },
+                  icon: Icon(
+                    Icons.copy,
+                    color: Colors.grey[600],
+                    size: 12,
+                  ),
+                )
+              ],
+            ),
+          ),
+        )
         // ),
       ]),
     );

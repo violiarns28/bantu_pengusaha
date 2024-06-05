@@ -4,9 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Attendance;
+use App\Models\HRISPresensi;
 use Illuminate\Support\Facades\Auth;
-
 
 date_default_timezone_set("Asia/Jakarta");
 
@@ -14,7 +13,7 @@ class AttendanceController extends Controller
 {
     function index()
     {
-        $attendances = Attendance::where('user_id', Auth::user()->id)->get();
+        $attendances = HRISPresensi::where('nomor_user', Auth::user()->id)->get();
 
         if ($attendances->isEmpty()) {
             return response()->json([
@@ -33,23 +32,16 @@ class AttendanceController extends Controller
 
     function create(Request $request)
     {
-        $user = Auth::user();
-        if ($user->mac_address !== $request->mac_address) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized device',
-            ]);
-        }
-
-        $attendance = Attendance::whereDate('date', '=', date('Y-m-d'))
-            ->where('user_id', $user->id)
+        $information = "";
+        $attendance = HRISPresensi::whereDate('tanggal', '=', date('Y-m-d'))
+            ->where('nomor_user', Auth::user()->id)
             ->first();
         if ($attendance == null) {
-            $attendance = Attendance::create([
-                'user_id' => $user->id,
+            $attendance = HRISPresensi::create([
+                'nomor_user' => Auth::user()->id,
                 'latitude' => $request->latitude,
                 'longitude' => $request->longitude,
-                'date' => date('Y-m-d'),
+                'tanggal' => date('Y-m-d'),
                 'clock_in' => date('H:i:s'),
                 'clock_out' => null
             ]);
@@ -61,16 +53,17 @@ class AttendanceController extends Controller
             ], 200, [], JSON_NUMERIC_CHECK);
         } else {
             if ($attendance->clock_out !== null) {
+                $information = "You've already presence today";
                 return response()->json([
                     'success' => false,
-                    'message' => "You've already presence today",
+                    'message' => $information,
                 ]);
             } else {
                 $attendance->update([
                     'clock_out' => date('H:i:s')
                 ]);
             }
-            $attendance = Attendance::whereDate('date', '=', date('Y-m-d'))->where('user_id', $user->id)->first();
+            $attendance = HRISPresensi::whereDate('tanggal', '=', date('Y-m-d'))->where('nomor_user', Auth::user()->id)->first();
             return response()->json([
                 'success' => true,
                 'message' => 'Clock out successful',

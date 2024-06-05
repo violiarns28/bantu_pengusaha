@@ -1,8 +1,9 @@
-import 'dart:math';
+import 'dart:math' show cos, sqrt, asin;
 
 import 'package:bantu_pengusaha/core/services/location.dart';
 import 'package:bantu_pengusaha/data/models/models.dart';
 import 'package:bantu_pengusaha/data/repo/repo.dart';
+import 'package:bantu_pengusaha/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
@@ -62,7 +63,7 @@ class AttendanceController extends GetxController {
     double longitude,
   ) async {
     var res = await _attendanceRepo.save(latitude, longitude);
-
+    log.d("AttendanceController.saveAttendance ${res.message}");
     if (res.success) {
       if (today.value?.clockIn == null) {
         showToast('Clock in successful');
@@ -74,9 +75,9 @@ class AttendanceController extends GetxController {
       hC.today.value = res.data;
     } else {
       if (today.value?.clockIn == null) {
-        showToast('Clock in unsuccessful');
+        showToast(res.message);
       } else {
-        showToast('Clock out unsuccessful');
+        showToast(res.message);
       }
     }
   }

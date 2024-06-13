@@ -10,21 +10,31 @@ class LoginController extends GetxController {
   final AuthRepo _authRepo;
   final LocationService _locationService;
 
+  var isPasswordVisible = false.obs;
+
   LoginController(this._authRepo, this._locationService);
 
   @override
-  void onInit() async {
-    initRepo();
+  void onInit() {
+    super.onInit();
     email = TextEditingController();
     password = TextEditingController();
+    initRepo();
+    _checkLoggedInUser();
+  }
+
+  void initRepo() async {
     final me = await _authRepo.me();
     if (me.success) {
       Get.toNamed(Routes.BOTTOM_NAV_BAR);
     }
+  }
 
-    // email.text = 'a@a.com';
-    // password.text = 'password';
-    super.onInit();
+  Future<void> _checkLoggedInUser() async {
+    final me = await _authRepo.me();
+    if (me.success) {
+      Get.toNamed(Routes.BOTTOM_NAV_BAR);
+    }
   }
 
   @override
@@ -42,11 +52,15 @@ class LoginController extends GetxController {
       if (res.success) {
         Get.offAllNamed(Routes.BOTTOM_NAV_BAR);
       } else {
-        Get.snackbar('Error', res.message);
+        Get.snackbar('Error', res.message ?? 'Unknown error');
       }
     } else {
       Get.snackbar('Location permission required',
           "To use this app please allow location permission");
     }
+  }
+
+  void togglePasswordVisibility() {
+    isPasswordVisible.value = !isPasswordVisible.value;
   }
 }

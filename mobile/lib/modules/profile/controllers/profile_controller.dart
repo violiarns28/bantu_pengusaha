@@ -22,7 +22,7 @@ class ProfileController extends GetxController {
   );
 
   Uint8List? _image;
-  File? selectedImage;
+  Rx<File?> selectedImage = Rx<File?>(null);
   final name = "".obs;
   final deviceId = "".obs;
   Rx<AttendanceModel?> today = Rx<AttendanceModel?>(null);
@@ -69,6 +69,7 @@ class ProfileController extends GetxController {
                     },
                     child: const SizedBox(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.image,
@@ -87,6 +88,7 @@ class ProfileController extends GetxController {
                     },
                     child: const SizedBox(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.camera_alt,
@@ -109,9 +111,8 @@ class ProfileController extends GetxController {
   Future<void> _pickImage(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
     if (pickedImage == null) return;
-    selectedImage = File(pickedImage.path);
+    selectedImage.value = File(pickedImage.path);
     _image = File(pickedImage.path).readAsBytesSync();
-    update(); // Trigger UI update
     Navigator.of(Get.context!).pop(); // Close the modal sheet
   }
 }

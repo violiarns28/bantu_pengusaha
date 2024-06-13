@@ -11,17 +11,16 @@ class AuthRepoImpl extends GetConnect implements AuthRepo {
 
   AuthRepoImpl(this._local);
 
-  static decoder(data) {
+  static dynamic decoder(data) {
     log.e('Data: $data');
 
-    if (data['data'] == null || data['success'] == false) {
+    if (data == null || data['data'] == null || data['success'] == false) {
       return data;
     }
     data['data'] = UserModel.fromJson(data['data']);
     return data;
   }
 
-// tadi mau ketik email tbtb gitu, blm aku pencet login
   @override
   Future<ApiResponse<UserModel>> login(
     String email,
@@ -29,12 +28,12 @@ class AuthRepoImpl extends GetConnect implements AuthRepo {
   ) async {
     final res = await post(
       ListApi.authLogin,
-      headers: _local.setHeaders(),
       {'email': email, 'password': password},
+      headers: _local.setHeaders(),
       decoder: decoder,
     );
 
-    if (res.body['data'] != null) {
+    if (res.body != null && res.body['data'] != null) {
       await _local.setUser(res.body['data']);
       await _local.setToken(res.body['data'].token);
     }
@@ -50,8 +49,8 @@ class AuthRepoImpl extends GetConnect implements AuthRepo {
   ) async {
     final res = await post(
       ListApi.authRegister,
-      headers: _local.setHeaders(),
       {'name': name, 'email': email, 'password': password},
+      headers: _local.setHeaders(),
       decoder: decoder,
     );
 

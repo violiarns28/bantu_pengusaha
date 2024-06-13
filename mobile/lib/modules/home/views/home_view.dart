@@ -6,20 +6,22 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final height = size.height;
     return Scaffold(
       body: FutureBuilder(
-          future: controller.getData(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else {
-              return Scaffold(
-                backgroundColor: const Color(0xFFB9CFFC),
-                body: Column(
+        future: controller.getData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return Scaffold(
+              backgroundColor: const Color(0xFFB9CFFC),
+              body: SingleChildScrollView(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
@@ -90,7 +92,7 @@ class HomeView extends GetView<HomeController> {
                         ],
                       ),
                     ),
-                    const Expanded(child: SizedBox(height: 30)),
+                    const SizedBox(height: 30),
                     Stack(
                       children: [
                         Column(
@@ -122,7 +124,7 @@ class HomeView extends GetView<HomeController> {
                                       color: Color(0xFF000000),
                                     ),
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 4),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -132,9 +134,9 @@ class HomeView extends GetView<HomeController> {
                                         borderRadius: BorderRadius.circular(20),
                                         color: const Color(0xFFEDF0F6),
                                         child: Container(
-                                          padding: const EdgeInsets.all(16),
+                                          padding: const EdgeInsets.all(8),
                                           width: 162,
-                                          height: 130,
+                                          height: 120,
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -205,9 +207,9 @@ class HomeView extends GetView<HomeController> {
                                         borderRadius: BorderRadius.circular(20),
                                         color: const Color(0xFFEDF0F6),
                                         child: Container(
-                                          padding: const EdgeInsets.all(16),
+                                          padding: const EdgeInsets.all(8),
                                           width: 162,
-                                          height: 130,
+                                          height: 120,
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -275,153 +277,316 @@ class HomeView extends GetView<HomeController> {
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(height: 24),
+                                  const SizedBox(height: 20),
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Material(
-                                        elevation: 8,
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: const Color(0xFFEDF0F6),
-                                        child: Container(
-                                          padding: const EdgeInsets.all(16),
-                                          width: 162,
-                                          height: 130,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    padding:
-                                                        const EdgeInsets.all(2),
-                                                    decoration: BoxDecoration(
-                                                      color: const Color(
-                                                          0xFFC7D2E7),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Material(
+                                          elevation: 8,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: const Color(0xFFEDF0F6),
+                                          child: Container(
+                                            padding: const EdgeInsets.all(8),
+                                            width: 162,
+                                            height: 120,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              2),
+                                                      decoration: BoxDecoration(
+                                                        color: const Color(
+                                                            0xFFC7D2E7),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                      child: const Icon(Icons
+                                                          .timelapse_rounded),
                                                     ),
-                                                    child: const Icon(Icons
-                                                        .timelapse_rounded),
+                                                    const SizedBox(
+                                                      width: 8,
+                                                    ),
+                                                    Text(
+                                                      "Total Hours",
+                                                      style: TextStyle(
+                                                        fontSize: 16.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: const Color(
+                                                                0xFF000000)
+                                                            .withOpacity(0.65),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  height: 16,
+                                                ),
+                                                const Text(
+                                                  "2",
+                                                  style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Color(0xFF000000),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 8,
+                                                ),
+                                                Text(
+                                                  "Hours",
+                                                  style: TextStyle(
+                                                    fontSize: 14.0,
+                                                    fontWeight: FontWeight.w500,
+                                                    color:
+                                                        const Color(0xFF000000)
+                                                            .withOpacity(0.5),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Material(
+                                            elevation: 8,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: const Color(0xFFEDF0F6),
+                                            child: Container(
+                                              padding: const EdgeInsets.all(8),
+                                              width: 162,
+                                              height: 120,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(2),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: const Color(
+                                                              0xFFC7D2E7),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        child: const Icon(Icons
+                                                            .calendar_month_rounded),
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 8,
+                                                      ),
+                                                      Text(
+                                                        "Total Overtime",
+                                                        style: TextStyle(
+                                                          fontSize: 16.0,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: const Color(
+                                                                  0xFF000000)
+                                                              .withOpacity(
+                                                                  0.65),
+                                                        ),
+                                                      )
+                                                    ],
                                                   ),
                                                   const SizedBox(
-                                                    width: 8,
+                                                    height: 16,
+                                                  ),
+                                                  const Text(
+                                                    "1",
+                                                    style: TextStyle(
+                                                      fontSize: 18.0,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Color(0xFF000000),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 8,
                                                   ),
                                                   Text(
-                                                    "Total Leaves",
+                                                    "Hours",
                                                     style: TextStyle(
-                                                      fontSize: 16.0,
+                                                      fontSize: 14.0,
                                                       fontWeight:
                                                           FontWeight.w500,
                                                       color: const Color(
                                                               0xFF000000)
-                                                          .withOpacity(0.65),
+                                                          .withOpacity(0.5),
                                                     ),
                                                   )
                                                 ],
                                               ),
-                                              const SizedBox(
-                                                height: 16,
-                                              ),
-                                              const Text(
-                                                "2",
-                                                style: TextStyle(
-                                                  fontSize: 18.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Color(0xFF000000),
+                                            ))
+                                      ]),
+                                  const SizedBox(height: 20),
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Material(
+                                          elevation: 8,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: const Color(0xFFEDF0F6),
+                                          child: Container(
+                                            padding: const EdgeInsets.all(8),
+                                            width: 162,
+                                            height: 120,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              2),
+                                                      decoration: BoxDecoration(
+                                                        color: const Color(
+                                                            0xFFC7D2E7),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                      child: const Icon(Icons
+                                                          .timelapse_rounded),
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 8,
+                                                    ),
+                                                    Text(
+                                                      "Total Days",
+                                                      style: TextStyle(
+                                                        fontSize: 16.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: const Color(
+                                                                0xFF000000)
+                                                            .withOpacity(0.65),
+                                                      ),
+                                                    )
+                                                  ],
                                                 ),
-                                              ),
-                                              const SizedBox(
-                                                height: 8,
-                                              ),
-                                              Text(
-                                                "Times",
-                                                style: TextStyle(
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: const Color(0xFF000000)
-                                                      .withOpacity(0.5),
+                                                const SizedBox(
+                                                  height: 16,
                                                 ),
-                                              )
-                                            ],
+                                                const Text(
+                                                  "2",
+                                                  style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Color(0xFF000000),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 8,
+                                                ),
+                                                Text(
+                                                  "Days",
+                                                  style: TextStyle(
+                                                    fontSize: 14.0,
+                                                    fontWeight: FontWeight.w500,
+                                                    color:
+                                                        const Color(0xFF000000)
+                                                            .withOpacity(0.5),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Material(
-                                        elevation: 8,
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: const Color(0xFFEDF0F6),
-                                        child: Container(
-                                          padding: const EdgeInsets.all(16),
-                                          width: 162,
-                                          height: 130,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
+                                        Material(
+                                            elevation: 8,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: const Color(0xFFEDF0F6),
+                                            child: Container(
+                                              padding: const EdgeInsets.all(8),
+                                              width: 162,
+                                              height: 120,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Container(
-                                                    padding:
-                                                        const EdgeInsets.all(2),
-                                                    decoration: BoxDecoration(
-                                                      color: const Color(
-                                                          0xFFC7D2E7),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                    child: const Icon(Icons
-                                                        .calendar_month_rounded),
+                                                  Row(
+                                                    children: [
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(2),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: const Color(
+                                                              0xFFC7D2E7),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        child: const Icon(Icons
+                                                            .calendar_month_rounded),
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 8,
+                                                      ),
+                                                      Text(
+                                                        "Total Days Off",
+                                                        style: TextStyle(
+                                                          fontSize: 16.0,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: const Color(
+                                                                  0xFF000000)
+                                                              .withOpacity(
+                                                                  0.65),
+                                                        ),
+                                                      )
+                                                    ],
                                                   ),
                                                   const SizedBox(
-                                                    width: 8,
+                                                    height: 16,
+                                                  ),
+                                                  const Text(
+                                                    "12",
+                                                    style: TextStyle(
+                                                      fontSize: 18.0,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Color(0xFF000000),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 8,
                                                   ),
                                                   Text(
-                                                    "Total Days",
+                                                    "Days",
                                                     style: TextStyle(
-                                                      fontSize: 16.0,
+                                                      fontSize: 14.0,
                                                       fontWeight:
                                                           FontWeight.w500,
                                                       color: const Color(
                                                               0xFF000000)
-                                                          .withOpacity(0.65),
+                                                          .withOpacity(0.5),
                                                     ),
                                                   )
                                                 ],
                                               ),
-                                              const SizedBox(
-                                                height: 16,
-                                              ),
-                                              const Text(
-                                                "12",
-                                                style: TextStyle(
-                                                  fontSize: 18.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Color(0xFF000000),
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 8,
-                                              ),
-                                              Text(
-                                                "Working Days",
-                                                style: TextStyle(
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: const Color(0xFF000000)
-                                                      .withOpacity(0.5),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                            ))
+                                      ])
                                 ],
                               ),
                             ),
@@ -434,19 +599,18 @@ class HomeView extends GetView<HomeController> {
                             decoration: const BoxDecoration(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(15),
-                              ), // fixed radius syntax
+                              ),
                               image: DecorationImage(
                                 image: AssetImage(
-                                    'assets/images/locationContainer.png'), // Image asset
-                                fit: BoxFit.cover, // Image fit property
+                                    'assets/images/locationContainer.png'),
+                                fit: BoxFit.cover,
                               ),
                             ),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                      15, 16, 5, 0), // Padding for the icon
+                                  padding: EdgeInsets.fromLTRB(15, 16, 5, 0),
                                   child: Icon(
                                     Icons.location_on,
                                     color: Colors.white,
@@ -463,9 +627,11 @@ class HomeView extends GetView<HomeController> {
                     ),
                   ],
                 ),
-              );
-            }
-          }),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }
@@ -495,8 +661,7 @@ class LocationContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Padding(
-                padding:
-                    EdgeInsets.only(top: 10), // Padding for the "Location" text
+                padding: EdgeInsets.only(top: 10),
                 child: Text(
                   "Location",
                   style: TextStyle(

@@ -13,7 +13,14 @@ class AttendanceFactory extends Factory
    */
   public function definition()
   {
-    return [ 
+    return [
+      'user_id' => $this->faker->numberBetween(1, 10),
+      'latitude' => $this->faker->latitude,
+      'longitude' => $this->faker->longitude,
+      'date' => $this->faker->date(),
+      'clock_in' => $this->faker->time(),
+      'clock_out' => $this->faker->time(),
+      'created_at' => now()
     ];
   }
 }

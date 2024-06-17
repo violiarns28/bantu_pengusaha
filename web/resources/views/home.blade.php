@@ -8,7 +8,7 @@
                     <div class="card-header">Attendance Recap</div>
 
                     <div class="card-body">
-                        <table id="example" class="table table-striped" style="width:100%">
+                        <table id="attendance-table" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -37,7 +37,7 @@
     </div>
     <script type="text/javascript" class="init">
         $(document).ready(function() {
-            var table = $('#example').DataTable({
+            var table = $('#attendance-table').DataTable({
                 rowReorder: {
                     selector: 'td:nth-child(2)'
                 },

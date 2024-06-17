@@ -17,7 +17,7 @@ class AttendanceFactory extends Factory
       'user_id' => $this->faker->numberBetween(1, 10),
       'latitude' => $this->faker->latitude,
       'longitude' => $this->faker->longitude,
-      'date' => $this->faker->date(),
+      'date' => $this->faker->dateTimeBetween('2024-06-15', '2024-06-17')->format('Y-m-d'),
       'clock_in' => $this->faker->time(),
       'clock_out' => $this->faker->time(),
       'created_at' => now()

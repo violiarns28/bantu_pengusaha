@@ -1,20 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Models\Attendance;
+use App\Http\Controllers\Controller;
 use App\Models\User;
 
 class ReportController extends Controller
 {
-  public function __construct()
-  {
-    $this->middleware('auth');
-  }
 
-  function index()
+  public function get_data_by_date_range()
   {
-    $users = User::with('attendances')->get();
+    $start_date = request('start_date');
+    $end_date = request('end_date') ?? date('Y-m-d');
+
+    $users = User::with('attendances')
+      ->whereHas('attendances', function ($query) use ($start_date, $end_date) {
+        $query->whereBetween('date', [$start_date, $end_date]);
+      })
+      ->get();
 
     foreach ($users as $user) {
       $totalHours = 0;
@@ -41,8 +44,18 @@ class ReportController extends Controller
       $user->totalDayOff = $totalDayOff;
     }
 
-    return view('report/index', [
-      'users' => $users
-    ]);
+    if ($users->isEmpty()) {
+      return response()->json([
+        'success' => false,
+        'message' => 'No report data found',
+        'data' => null
+      ]);
+    } else {
+      return response()->json([
+        'success' => true,
+        'message' => 'Report data found',
+        'data' => $users
+      ], 200, [], JSON_NUMERIC_CHECK);
+    }
   }
 }

@@ -34,7 +34,6 @@
     <script type="text/javascript" language="javascript"
         src="https://cdn.datatables.net/rowreorder/1.2.8/js/dataTables.rowReorder.min.js"></script>
 
-
 </head>
 
 <body>

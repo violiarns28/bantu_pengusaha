@@ -6,9 +6,25 @@
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-header">Attendance Recap</div>
-
                     <div class="card-body">
-                        <table id="example" class="table table-striped" style="width:100%">
+                        <div class="row mb-4">
+                            <div class="col-sm">
+                                <label class="form-label">
+                                    Start Date
+                                </label>
+                                <input id='start-date' type="date" class="form-control" placeholder="Start Date">
+                            </div>
+                            <div class="col-sm">
+                                <label class="form-label">
+                                    End Date
+                                </label>
+                                <input id='end-date' type="date" class="form-control" placeholder="End Date">
+                            </div>
+                            <div>
+                                <button id='clear-button' class="btn btn-secondary mt-2">Clear</button>
+                            </div>
+                        </div>
+                        <table id="report-table" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -37,11 +53,47 @@
     </div>
     <script type="text/javascript" class="init">
         $(document).ready(function() {
-            var table = $('#example').DataTable({
+
+            let table = $('#report-table').DataTable({
                 rowReorder: {
                     selector: 'td:nth-child(2)'
                 },
                 responsive: true
+            });
+
+            $('#start-date, #end-date').change(function() {
+                // fetch api using ajax 
+                $.ajax({
+                    url: '/api/report/filter',
+                    type: 'GET',
+                    data: {
+                        start_date: $('#start-date').val(),
+                        end_date: $('#end-date').val()
+                    },
+                    success: function(res) {
+                        console.log(res);
+                        if (res.success) {
+                            table.clear().draw();
+                            for (const item of res.data) {
+                                table.row.add([
+                                    item.name,
+                                    item.totalHours,
+                                    item.totalOvertime,
+                                    item.totalDay,
+                                    item.totalDayOff
+                                ]).draw(false)
+                            }
+                        } else {
+                            alert(res.message);
+                        }
+                    }
+                });
+            });
+
+            $('#clear-button').on('click', function() {
+                $('#start-date').val('');
+                $('#end-date').val('');
+                table.draw();
             });
         });
     </script>

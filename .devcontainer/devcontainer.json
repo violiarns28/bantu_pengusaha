@@ -1,0 +1,28 @@
+{
+  "name": "Bantu Pengusaha Dev Container",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "forwardPorts": [
+    8080, // PHP
+    3306 // MariaDB
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "TechieCouch.laravel-php-essentials",
+        "cweijan.vscode-database-client2"
+      ]
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers-contrib/features/composer:1": {
+      "version": "latest"
+    },
+    "ghcr.io/shyim/devcontainers-features/bun:0": {
+      "version": "latest"
+    }
+  },
+
+  "postCreateCommand": "cd web && composer update && bun install"
+}

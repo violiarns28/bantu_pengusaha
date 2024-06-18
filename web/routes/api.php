@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\AttendanceController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,29 +19,32 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(
-    ['prefix' => 'auth'],
-    function () {
-        Route::post('/register', [AuthController::class, 'register']);
-        Route::post('/login', [AuthController::class, 'login']);
+  ['prefix' => 'auth'],
+  function () {
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
 
-        Route::group(['middleware' => ['auth:sanctum']], function () {
-            Route::get('/me', [AuthController::class, 'me']);
-            Route::get('/logout', [AuthController::class, 'logout']);
-        });
-    }
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+      Route::get('/me', [AuthController::class, 'me']);
+      Route::get('/logout', [AuthController::class, 'logout']);
+    });
+  }
 );
 
 Route::group(
-    [
-        'middleware' => ['auth:sanctum'],
-        'prefix' => 'attendance'
-    ],
-    function () {
-        Route::get('/profile', function (Request $request) {
-            return auth()->user();
-        });
+  [
+    'middleware' => ['auth:sanctum'],
+    'prefix' => 'attendance'
+  ],
+  function () {
+    Route::get('/profile', function (Request $request) {
+      return auth()->user();
+    });
 
-        Route::get('/',  [AttendanceController::class, 'index']);
-        Route::post('/', [AttendanceController::class, 'create']);
-    }
+    Route::get('/',  [AttendanceController::class, 'index']);
+    Route::post('/', [AttendanceController::class, 'create']);
+  }
 );
+
+
+Route::get('/report/filter', [ReportController::class, 'get_data_by_date_range']);

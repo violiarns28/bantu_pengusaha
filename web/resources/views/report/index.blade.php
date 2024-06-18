@@ -62,7 +62,6 @@
             });
 
             $('#start-date, #end-date').change(function() {
-                // fetch api using ajax 
                 $.ajax({
                     url: '/api/report/filter',
                     type: 'GET',
@@ -71,7 +70,6 @@
                         end_date: $('#end-date').val()
                     },
                     success: function(res) {
-                        console.log(res);
                         if (res.success) {
                             table.clear().draw();
                             for (const item of res.data) {
@@ -84,7 +82,11 @@
                                 ]).draw(false)
                             }
                         } else {
-                            alert(res.message);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: res.message,
+                            });
                         }
                     }
                 });
@@ -93,7 +95,31 @@
             $('#clear-button').on('click', function() {
                 $('#start-date').val('');
                 $('#end-date').val('');
-                table.draw();
+
+                $.ajax({
+                    url: '/api/report',
+                    type: 'GET',
+                    success: function(res) {
+                        if (res.success) {
+                            table.clear().draw();
+                            for (const item of res.data) {
+                                table.row.add([
+                                    item.name,
+                                    item.totalHours,
+                                    item.totalOvertime,
+                                    item.totalDay,
+                                    item.totalDayOff
+                                ]).draw(false)
+                            }
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: res.message,
+                            });
+                        }
+                    }
+                });
             });
         });
     </script>

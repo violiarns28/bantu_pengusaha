@@ -5,8 +5,25 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="card">
-                    <div class="card-header">Attendance Recap</div>
-                    <div class="card-body"> 
+                    <div class="card-header">Attendance</div>
+                    <div class="card-body">
+                        {{-- manual presence --}}
+                        <div class="row mb-4">
+                            <div class="col-sm">
+                                <form action="{{ route('presence') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary">Clock In</button>
+                                </form>
+                            </div>
+                            <div class="col-sm">
+                                <form action="{{ route('presence') }}" method="POST">
+                                    @csrf
+                                    @method('POST')
+                                    <button type="submit" class="btn btn-danger">Clock Out</button>
+                                </form>
+                            </div>
+                        </div>
+
                         <div class="row mb-4">
                             <div class="col-sm">
                                 <label class="form-label">
@@ -24,6 +41,7 @@
                                 <button id='clear-button' class="btn btn-secondary mt-2">Clear</button>
                             </div>
                         </div>
+
                         <table id="attendance-table" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
@@ -83,6 +101,20 @@
                 $('#end-date').val('');
                 table.draw();
             });
+        });
+    </script>
+@endsection
+
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            @if (session('status') && session('message'))
+                Swal.fire({
+                    icon: '{{ session('status') }}',
+                    title: '{{ session('message') }}'
+                });
+            @endif
         });
     </script>
 @endsection

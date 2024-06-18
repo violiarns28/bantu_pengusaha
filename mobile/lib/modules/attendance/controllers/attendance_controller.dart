@@ -16,12 +16,23 @@ import '../../home/controllers/home_controller.dart';
 class AttendanceController extends GetxController {
   final AttendanceRepo _attendanceRepo;
   final LocationService _locationService;
-  AttendanceController(this._attendanceRepo, this._locationService);
+  final GeneralRepo _generalRepo;
+  AttendanceController(
+    this._attendanceRepo,
+    this._locationService,
+    this._generalRepo,
+  );
 
   final Rx<AttendanceModel?> today = Rx<AttendanceModel?>(null);
 
   final Rx<LocationData?> loc = Rx<LocationData?>(null);
   final Rx<List<Placemark>?> pMark = Rx<List<Placemark>?>(null);
+  final Rx<GeneralLocationModel> remoteLocation = Rx<GeneralLocationModel>(
+    GeneralLocationModel(
+      latitude: 0.0,
+      longitude: 0.0,
+    ),
+  );
 
   @override
   void onInit() {
@@ -40,6 +51,18 @@ class AttendanceController extends GetxController {
       }
     } else {
       showToast(res.message);
+    }
+
+    final locRes = await _generalRepo.getLocation();
+    if (locRes.success) {
+      if (locRes.data!.isNotEmpty) {
+        remoteLocation.value =
+            GeneralLocationModel.fromJson(locRes.data!.first.value);
+      } else {
+        showToast('Remote location not found');
+      }
+    } else {
+      showToast(locRes.message);
     }
   }
 
@@ -82,7 +105,10 @@ class AttendanceController extends GetxController {
     }
   }
 
-  double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+  double calculateDistance(double lat1, double lon1) {
+    // double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+    double lat2 = remoteLocation.value.latitude;
+    double lon2 = remoteLocation.value.longitude;
     const p = 0.017453292519943295;
     var a = 0.5 -
         cos((lat2 - lat1) * p) / 2 +

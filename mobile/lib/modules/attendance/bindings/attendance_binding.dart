@@ -11,6 +11,7 @@ class AttendanceBinding extends Bindings {
       () => AttendanceController(
         Get.find<AttendanceRepoImpl>(),
         Get.find<LocationService>(),
+        Get.find<GeneralRepoImpl>(),
       ),
     );
   }

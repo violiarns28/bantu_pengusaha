@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 export './attendance/attendance.dart';
 export './auth/auth.dart';
+export './general/general.dart';
 
 void initRepo() {
   final lS = Get.find<LocalService>;
@@ -12,5 +13,8 @@ void initRepo() {
   );
   Get.lazyPut(
     () => AttendanceRepoImpl(lS()),
+  );
+  Get.lazyPut(
+    () => GeneralRepoImpl(lS()),
   );
 }

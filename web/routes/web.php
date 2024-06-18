@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\GeneralController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -21,7 +22,7 @@ Route::redirect('/', '/home');
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-
+Route::post('/presence', [HomeController::class, 'presence'])->name('presence');
 // Route::group(['prefix' => 'user'], function () {
 //     Route::get('/', [UserController::class, 'index'])->name('user');
 //     Route::get('/create', [UserController::class, 'create'])->name('user-create');
@@ -31,5 +32,10 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::resource('user', UserController::class);
 
 Route::group(['prefix' => 'report'], function () {
-    Route::get('/', [ReportController::class, 'index'])->name('report');
+  Route::get('/', [ReportController::class, 'index'])->name('report');
+});
+
+Route::group(['prefix' => 'general'], function () {
+  Route::get('/', [GeneralController::class, 'index'])->name('general.index');
+  Route::post('/update_location', [GeneralController::class, 'update_location'])->name('general.update_location');
 });

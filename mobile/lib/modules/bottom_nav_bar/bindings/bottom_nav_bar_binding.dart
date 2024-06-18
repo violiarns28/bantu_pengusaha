@@ -9,6 +9,8 @@ class BottomNavBarBinding extends Bindings {
     final attendenceRepo = Get.find<AttendanceRepoImpl>;
     final localService = Get.find<LocalService>;
     final locationService = Get.find<LocationService>;
+    final generalRepo = Get.find<GeneralRepoImpl>;
+
     Get.lazyPut<BottomNavBarController>(
       () => BottomNavBarController(),
     );
@@ -23,6 +25,7 @@ class BottomNavBarBinding extends Bindings {
       () => AttendanceController(
         attendenceRepo(),
         locationService(),
+        generalRepo(),
       ),
     );
     Get.lazyPut<ProfileController>(

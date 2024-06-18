@@ -288,8 +288,8 @@ class ClockInOutButton extends StatelessWidget {
           double distance = controller.calculateDistance(
             currentLocation.latitude!,
             currentLocation.longitude!,
-            -7.3585689,
-            112.7413656,
+            // -7.3585689,
+            // 112.7413656,
           );
           if (distance <= 10) {
             controller.saveAttendance(

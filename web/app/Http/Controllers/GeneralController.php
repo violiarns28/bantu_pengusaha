@@ -18,11 +18,12 @@ class GeneralController extends Controller
       $location =   General::create([
         'key' => 'location',
         'value' => json_encode([
-          'lat' => 0,
-          'lng' => 0
+          'latitude' => 0,
+          'longitude' => 0
         ])
       ]);
     }
+
     $location->value = json_decode($location->value);
     return view('general.index', [
       'location' => $location
@@ -33,9 +34,10 @@ class GeneralController extends Controller
   {
     $location = General::where('key', 'location')->first();
     $location->value = json_encode([
-      'lat' => request('lat'),
-      'lng' => request('lng')
+      'latitude' => request('latitude'),
+      'longitude' => request('longitude')
     ]);
+
     $location->save();
     return redirect()->route('general.index')->with('status', 'success')->with('message', 'Location updated successfully');
   }

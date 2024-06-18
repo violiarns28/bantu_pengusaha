@@ -15,11 +15,13 @@ class GeneralController extends Controller
       $location =   General::create([
         'key' => 'location',
         'value' => json_encode([
-          'lat' => 0,
-          'lng' => 0
+          'latitude' => 0,
+          'longitude' => 0
         ])
       ]);
     }
+
+    $location->value = json_decode($location->value);
 
     return response()->json([
       'success' => true,

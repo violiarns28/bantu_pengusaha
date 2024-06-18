@@ -13,15 +13,15 @@
                                     <label class="form-label">
                                         Latitude
                                     </label>
-                                    <input id='latitude' type="text" class="form-control" name="lat"
-                                        placeholder="Latitude" value="{{ $location->value->lat }}">
+                                    <input id='latitude' type="text" class="form-control" name="latitude"
+                                        placeholder="Latitude" value="{{ $location->value->latitude }}">
                                 </div>
                                 <div class="col-sm">
                                     <label class="form-label">
                                         Longtitude
                                     </label>
-                                    <input id='longtitude' type="text" class="form-control" name="lng"
-                                        placeholder="Longtitude" value="{{ $location->value->lng }}">
+                                    <input id='longtitude' type="text" class="form-control" name="longitude"
+                                        placeholder="Longtitude" value="{{ $location->value->longitude }}">
                                 </div>
                                 <div>
                                     <button id='save-button' class="btn btn-primary mt-2">Save</button>

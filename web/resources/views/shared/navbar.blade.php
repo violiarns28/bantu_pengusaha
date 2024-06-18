@@ -30,6 +30,12 @@
                                  href="{{ route('user.index') }}">User</a>
                          </li>
                      @endif
+                     @if (Route::has('general.index'))
+                         <li class="nav-item">
+                             <a class="nav-link {{ request()->routeIs('general.index') ? 'active' : '' }}"
+                                 href="{{ route('general.index') }}">General</a>
+                         </li>
+                     @endif
                  @endauth
              </ul>
 

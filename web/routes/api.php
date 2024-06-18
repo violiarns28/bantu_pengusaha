@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\AttendanceController;
+use App\Http\Controllers\API\GeneralController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ReportController;
 
@@ -46,5 +47,11 @@ Route::group(
   }
 );
 
+Route::group(['prefix' => 'report'], function () {
+  Route::get('/', [ReportController::class, 'index']);
+  Route::get('/filter', [ReportController::class, 'get_data_by_date_range']);
+});
 
-Route::get('/report/filter', [ReportController::class, 'get_data_by_date_range']);
+Route::group(['prefix' => 'general'], function () {
+  Route::get('/location', [GeneralController::class, 'location']);
+});

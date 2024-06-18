@@ -5,7 +5,8 @@
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "forwardPorts": [
     8080, // PHP
-    3306 // MariaDB
+    3306, // MariaDB
+    9000  // Xdebug
   ],
   "customizations": {
     "vscode": {

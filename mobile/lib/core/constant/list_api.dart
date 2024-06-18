@@ -12,4 +12,10 @@ class ListApi {
 
   // Attendance
   static const String attendance = '$baseUrl/attendance';
+
+  // General 
+  static const String general = '$baseUrl/general'
+
+  // Location
+  static const String generalLocation = '$general/location'
 }

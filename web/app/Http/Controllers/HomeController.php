@@ -8,6 +8,8 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
+date_default_timezone_set("Asia/Jakarta");
+
 class HomeController extends Controller
 {
   /**

@@ -9,7 +9,13 @@ class GeneralLocationModel {
 
   factory GeneralLocationModel.fromJson(Map<String, dynamic> json) =>
       GeneralLocationModel(
-          latitude: json['latitude'], longitude: json['longitude']);
+        latitude: json['latitude'] is String
+            ? double.parse(json['latitude'])
+            : json['latitude'],
+        longitude: json['longitude'] is String
+            ? double.parse(json['longitude'])
+            : json['longitude'],
+      );
 
   Map<String, dynamic> toJson() =>
       {'latitude': latitude, 'longitude': longitude};

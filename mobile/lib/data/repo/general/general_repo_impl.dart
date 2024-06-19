@@ -22,7 +22,7 @@ class GeneralRepoImpl extends GetConnect implements GeneralRepo {
           .toList()
           .cast<GeneralModel>();
     } else {
-      data['data'] = GeneralModel.fromJson(data['data']);
+      data['data'] = [GeneralModel.fromJson(data['data'])];
     }
     return data;
   }

@@ -285,7 +285,7 @@ class ClockInOutButton extends StatelessWidget {
     return Obx(() {
       return ElevatedButton(
         onPressed: () async {
-          double distance = controller.calculateDistance(
+          double distance = await controller.calculateDistance(
             currentLocation.latitude!,
             currentLocation.longitude!,
             // -7.3585689,

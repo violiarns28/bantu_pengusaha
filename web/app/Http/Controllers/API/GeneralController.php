@@ -26,7 +26,7 @@ class GeneralController extends Controller
     return response()->json([
       'success' => true,
       'message' => 'Location found',
-      'data' => $location
+      'data' => $location->toArray()
     ], 200, [], JSON_NUMERIC_CHECK);
   }
 }

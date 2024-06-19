@@ -37,6 +37,7 @@ class AttendanceController extends GetxController {
   @override
   void onInit() {
     getData();
+    getRemoteLocation();
     super.onInit();
   }
 
@@ -52,17 +53,22 @@ class AttendanceController extends GetxController {
     } else {
       showToast(res.message);
     }
+  }
 
+  Future<GeneralLocationModel?> getRemoteLocation() async {
     final locRes = await _generalRepo.getLocation();
     if (locRes.success) {
       if (locRes.data!.isNotEmpty) {
-        remoteLocation.value =
-            GeneralLocationModel.fromJson(locRes.data!.first.value);
+        final loc = GeneralLocationModel.fromJson(locRes.data!.first.value);
+        remoteLocation.value = loc;
+        return loc;
       } else {
         showToast('Remote location not found');
+        return null;
       }
     } else {
       showToast(locRes.message);
+      return null;
     }
   }
 
@@ -105,16 +111,23 @@ class AttendanceController extends GetxController {
     }
   }
 
-  double calculateDistance(double lat1, double lon1) {
+  Future<double> calculateDistance(double lat1, double lon1) async {
     // double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-    double lat2 = remoteLocation.value.latitude;
-    double lon2 = remoteLocation.value.longitude;
+    final loc = await getRemoteLocation();
+    if (loc == null) {
+      showToast('Remote location not found');
+      return 999;
+    }
+
+    double lat2 = loc.latitude;
+    double lon2 = loc.longitude;
     const p = 0.017453292519943295;
     var a = 0.5 -
         cos((lat2 - lat1) * p) / 2 +
         cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
-    return 12742 * asin(sqrt(a)); // 2 * R; R = 6371 km
-
+    final res = 12742 * asin(sqrt(a)); // 2 * R; R = 6371 km
+    log.e('====== YOUR DISTANCE ========\n $res');
+    return res;
     // return 0.0;
   }
 

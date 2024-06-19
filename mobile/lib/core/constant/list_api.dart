@@ -2,7 +2,7 @@ class ListApi {
   const ListApi._();
 
   // Base URL
-  static const String baseUrl = 'http://192.168.1.56:3000/api';
+  static const String baseUrl = 'https://api.bantupengusaha.id/api';
 
   // Auth
   static const String authLogin = '$baseUrl/auth/login';

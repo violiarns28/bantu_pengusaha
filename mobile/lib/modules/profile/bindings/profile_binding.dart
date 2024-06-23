@@ -9,8 +9,8 @@ class ProfileBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<ProfileController>(
       () => ProfileController(
-        Get.find<AuthRepoImpl>(),
-        Get.find<LocalService>(),
+        Get.find<AuthRepoImpl>(), // Mengambil instance dari AuthRepoImpl
+        Get.find<LocalService>(), // Mengambil instance dari LocalService
       ),
     );
   }

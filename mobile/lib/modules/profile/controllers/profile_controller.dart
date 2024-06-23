@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:bantu_pengusaha/core/routes/routes.dart';
 import 'package:bantu_pengusaha/core/services/services.dart';
@@ -21,7 +20,6 @@ class ProfileController extends GetxController {
     this._localService,
   );
 
-  Uint8List? _image;
   Rx<File?> selectedImage = Rx<File?>(null);
   final name = "".obs;
   final deviceId = "".obs;
@@ -112,7 +110,6 @@ class ProfileController extends GetxController {
     final pickedImage = await ImagePicker().pickImage(source: source);
     if (pickedImage == null) return;
     selectedImage.value = File(pickedImage.path);
-    _image = File(pickedImage.path).readAsBytesSync();
     Navigator.of(Get.context!).pop(); // Close the modal sheet
   }
 }

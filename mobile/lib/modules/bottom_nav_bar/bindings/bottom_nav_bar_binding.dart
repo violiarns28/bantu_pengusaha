@@ -1,38 +1,42 @@
-import 'package:bantu_pengusaha/core/services/services.dart';
-import 'package:bantu_pengusaha/data/repo/repo.dart';
-import 'package:bantu_pengusaha/modules/modules.dart';
-import 'package:get/get.dart';
+import 'package:bantu_pengusaha/core/services/services.dart'; // Mengimpor berbagai layanan yang diperlukan
+import 'package:bantu_pengusaha/data/repo/repo.dart'; // Mengimpor berbagai repositori yang diperlukan
+import 'package:bantu_pengusaha/modules/modules.dart'; // Mengimpor berbagai modul atau bagian aplikasi
+import 'package:get/get.dart'; // Mengimpor Get untuk manajemen status
 
 class BottomNavBarBinding extends Bindings {
   @override
   void dependencies() {
-    final attendenceRepo = Get.find<AttendanceRepoImpl>;
-    final localService = Get.find<LocalService>;
-    final locationService = Get.find<LocationService>;
-    final generalRepo = Get.find<GeneralRepoImpl>;
+    final attendanceRepo = Get.find<
+        AttendanceRepoImpl>(); // Mendapatkan instance AttendanceRepoImpl
+    final localService =
+        Get.find<LocalService>(); // Mendapatkan instance LocalService
+    final locationService =
+        Get.find<LocationService>(); // Mendapatkan instance LocationService
+    final generalRepo =
+        Get.find<GeneralRepoImpl>(); // Mendapatkan instance GeneralRepoImpl
 
     Get.lazyPut<BottomNavBarController>(
-      () => BottomNavBarController(),
+      () => BottomNavBarController(), // Menginisialisasi BottomNavBarController
     );
     Get.lazyPut<HomeController>(
       () => HomeController(
-        attendenceRepo(),
-        localService(),
-        locationService(),
-      ),
+        attendanceRepo,
+        localService,
+        locationService,
+      ), // Menginisialisasi HomeController dengan dependensi yang diperlukan
     );
     Get.lazyPut<AttendanceController>(
       () => AttendanceController(
-        attendenceRepo(),
-        locationService(),
-        generalRepo(),
-      ),
+        attendanceRepo,
+        locationService,
+        generalRepo,
+      ), // Menginisialisasi AttendanceController dengan dependensi yang diperlukan
     );
     Get.lazyPut<ProfileController>(
       () => ProfileController(
         Get.find<AuthRepoImpl>(),
-        localService(),
-      ),
+        localService,
+      ), // Menginisialisasi ProfileController dengan dependensi yang diperlukan
     );
   }
 }

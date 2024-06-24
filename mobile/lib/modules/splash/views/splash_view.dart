@@ -1,18 +1,20 @@
-import 'package:bantu_pengusaha/core/routes/routes.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:bantu_pengusaha/core/routes/routes.dart'; // Mengimpor definisi rute aplikasi
+import 'package:flutter/material.dart'; // Mengimpor library Flutter
+import 'package:get/get.dart'; // Mengimpor GetX library untuk manajemen state dan navigasi
 
-import '../controllers/splash_controller.dart';
+import '../controllers/splash_controller.dart'; // Mengimpor kontroler SplashController
 
 class SplashView extends GetView<SplashController> {
   const SplashView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Delay navigasi ke halaman LOGIN menggunakan Future.delayed
     Future.delayed(const Duration(seconds: 3), () {
       Get.toNamed(Routes.LOGIN);
     });
-    // Utilize GetX's delay feature
+
+    // Menggunakan Scaffold untuk tata letak dasar aplikasi
     return Scaffold(
       body: Center(
         child: Container(
@@ -31,7 +33,7 @@ class SplashView extends GetView<SplashController> {
             child: Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  // Corrected asset path
+                  // Path untuk aset gambar logo
                   image: AssetImage('assets/images/logoBantuPengusaha.png'),
                 ),
               ),

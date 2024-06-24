@@ -1,9 +1,9 @@
 class GeneralModel {
-  int id;
-  String key;
-  Map<String, dynamic> value;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int id; // ID dari model umum
+  String key; // Kunci dari model umum
+  Map<String, dynamic> value; // Nilai dinamis dari model umum
+  DateTime createdAt; // Tanggal dan waktu pembuatan entri
+  DateTime updatedAt; // Tanggal dan waktu pembaruan terakhir
 
   GeneralModel({
     required this.id,
@@ -13,6 +13,7 @@ class GeneralModel {
     required this.updatedAt,
   });
 
+  /// Factory method untuk membuat instance GeneralModel dari JSON
   factory GeneralModel.fromJson(Map<String, dynamic> json) => GeneralModel(
         id: json["id"],
         key: json["key"],
@@ -21,6 +22,7 @@ class GeneralModel {
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
+  /// Mengkonversi objek GeneralModel menjadi map JSON
   Map<String, dynamic> toJson() => {
         "id": id,
         "key": key,

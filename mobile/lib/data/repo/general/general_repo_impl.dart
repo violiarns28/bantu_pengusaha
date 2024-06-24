@@ -1,15 +1,17 @@
-import 'package:bantu_pengusaha/core/constant/constant.dart';
-import 'package:bantu_pengusaha/core/services/local.dart';
-import 'package:bantu_pengusaha/data/models/models.dart';
-import 'package:bantu_pengusaha/data/repo/repo.dart';
-import 'package:bantu_pengusaha/utils/logger.dart';
-import 'package:get/get_connect/connect.dart';
+import 'package:bantu_pengusaha/core/constant/constant.dart'; // Mengimpor konstanta yang diperlukan
+import 'package:bantu_pengusaha/core/services/local.dart'; // Mengimpor layanan LocalService
+import 'package:bantu_pengusaha/data/models/models.dart'; // Mengimpor model-model yang diperlukan
+import 'package:bantu_pengusaha/data/repo/repo.dart'; // Mengimpor kontrak GeneralRepo
+import 'package:bantu_pengusaha/utils/logger.dart'; // Mengimpor logger untuk pencatatan
+import 'package:get/get_connect/connect.dart'; // Mengimpor GetConnect dari paket get_connect
 
 class GeneralRepoImpl extends GetConnect implements GeneralRepo {
-  final LocalService _local;
+  final LocalService
+      _local; // Instance dari LocalService untuk manajemen penyimpanan lokal
 
-  GeneralRepoImpl(this._local);
+  GeneralRepoImpl(this._local); // Constructor untuk menginisialisasi _local
 
+  /// Decoder untuk mengubah data dari respons HTTP menjadi objek yang sesuai
   static decoder(data) {
     log.e('GeneralRepo.decode $data');
 
@@ -30,11 +32,15 @@ class GeneralRepoImpl extends GetConnect implements GeneralRepo {
   @override
   Future<ApiResponse<List<GeneralModel>>> getLocation() async {
     final res = await get(
-      ListApi.generalLocation,
-      headers: _local.setHeaders(),
-      decoder: decoder,
+      ListApi
+          .generalLocation, // Mengirimkan permintaan GET ke endpoint ListApi.generalLocation
+      headers: _local
+          .setHeaders(), // Menggunakan headers dari LocalService untuk autentikasi
+      decoder:
+          decoder, // Menggunakan decoder untuk mengubah respons HTTP menjadi List<GeneralModel>
     );
 
-    return ApiResponse<List<GeneralModel>>.fromJson(res.body);
+    return ApiResponse<List<GeneralModel>>.fromJson(
+        res.body); // Mengembalikan ApiResponse<List<GeneralModel>>
   }
 }

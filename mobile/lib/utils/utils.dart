@@ -1,15 +1,21 @@
 export 'logger.dart';
 
 extension StringExtension on String {
-  String clearLocalityPrefix() { 
+  String clearLocalityPrefix() {
     if (contains('Kecamatan')) {
-      return replaceAll('Kecamatan', '').trim();
+      // Jika string mengandung 'Kecamatan'
+      return replaceAll('Kecamatan', '')
+          .trim(); // Menghapus 'Kecamatan' dari string dan menghapus spasi di awal dan akhir
     } else if (contains('Kabupaten')) {
-      return replaceAll('Kabupaten', '').trim();
+      // Jika string mengandung 'Kabupaten'
+      return replaceAll('Kabupaten', '')
+          .trim(); // Menghapus 'Kabupaten' dari string dan menghapus spasi di awal dan akhir
     } else if (contains('Kota')) {
-      return replaceAll('Kota', '').trim();
+      // Jika string mengandung 'Kota'
+      return replaceAll('Kota', '')
+          .trim(); // Menghapus 'Kota' dari string dan menghapus spasi di awal dan akhir
     } else {
-      return this;
+      return this; // Mengembalikan string asli jika tidak ada prefix yang sesuai
     }
   }
 }
